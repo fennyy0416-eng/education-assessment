@@ -266,7 +266,6 @@
       font-size: 10px;
       text-anchor: middle;
     }
-
     @media (max-width: 760px) {
       h1 { font-size: 28px; }
       .grid, .mini-grid { grid-template-columns: 1fr; }
@@ -576,6 +575,18 @@
         summary = "当前仍处于可以逐步建立教育资金准备框架的阶段，时间相对可控，适合尽早形成长期习惯。";
       }
 
+      // 保存数据给 report.html 使用
+      localStorage.setItem("edu_score", totalScore);
+      localStorage.setItem("edu_phase", phase);
+      localStorage.setItem("edu_type", familyType);
+      localStorage.setItem("edu_summary", summary);
+      localStorage.setItem("edu_timeIndex", timeIndex.toFixed(1));
+      localStorage.setItem("edu_prepIndex", prepIndex.toFixed(1));
+      localStorage.setItem("edu_cashIndex", cashIndex.toFixed(1));
+      localStorage.setItem("edu_protectIndex", protectIndex.toFixed(1));
+      localStorage.setItem("edu_taxIndex", taxIndex.toFixed(1));
+      localStorage.setItem("edu_aidIndex", aidIndex.toFixed(1));
+
       document.getElementById("phaseBadge").textContent = phase;
       document.getElementById("typeTitle").textContent = familyType;
       document.getElementById("summaryText").textContent = summary;
@@ -609,7 +620,7 @@
           : "当前已进入相对敏感的时间窗口，后续更需要优先关注时间顺序与资料完整度。";
 
       document.getElementById("timeline2").textContent =
-        "随着孩子年龄增长，家庭通常会逐步从“先存起来”过渡到“怎么放、什么时候用、哪些信息需要提前准备”。";
+        "随着孩子年龄增长，家庭通常会逐步从"先存起来"过渡到"怎么放、什么时候用、哪些信息需要提前准备"。";
 
       document.getElementById("timeline3").textContent =
         "后续更适合形成一份完整的家庭教育资金梳理结果，把时间、账户、现金流与长期保障放在同一张图上看。";
@@ -643,6 +654,11 @@
       ]);
 
       document.getElementById("resultCard").scrollIntoView({ behavior: "smooth" });
+
+      // 自动跳转到报告页
+      setTimeout(function() {
+        window.location.href = "report.html";
+      }, 1200);
     }
   </script>
 </body>
