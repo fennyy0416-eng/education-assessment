@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>家庭教育资金体检</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            font-family: "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+            background: linear-gradient(180deg, #0b1220 0%, #111827 100%);
+            color: #e5eefc;
+            padding: 24px 16px 48px;
+        }
+        .container {
+            max-width: 760px;
+            margin: 0 auto;
+        }
+        .hero {
+            background: linear-gradient(135deg, #13213a 0%, #0f172a 100%);
+            border: 1px solid rgba(148, 163, 184, 0.18);
+            border-radius: 24px;
+            padding: 28px 24px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+            margin-bottom: 20px;
+        }
+        .eyebrow {
+            color: #93c5fd;
+            font-size: 13px;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+        h1 {
+            margin: 0 0 10px;
+            font-size: 34px;
+            line-height: 1.2;
+            color: #f8fbff;
+        }
+        .subtitle {
+            margin: 0;
+            color: #c7d7f2;
+            font-size: 16px;
+            line-height: 1.7;
+        }
+        .card {
+            background: rgba(15, 23, 42, 0.92);
+            border: 1px solid rgba(148, 163, 184, 0.18);
+            border-radius: 20px;
+            padding: 22px 20px;
+            margin-bottom: 18px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        .card h2 {
+            margin: 0 0 8px;
+            font-size: 22px;
+            color: #f8fbff;
+        }
+        .card p.desc {
+            margin: 0 0 18px;
+            color: #b9c9e6;
+            line-height: 1.7;
+            font-size: 14px;
+        }
+        .question {
+            margin-bottom: 18px;
+        }
+        .question label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            color: #eaf2ff;
+        }
+        select {
+            width: 100%;
+            padding: 13px 14px;
+            border-radius: 12px;
+            border: 1px solid #334155;
+            background: #0b1325;
+            color: #f8fbff;
+            font-size: 15px;
+            outline: none;
+        }
+        select:focus {
+            border-color: #60a5fa;
+            box-shadow: 0 0 0 3px rgba(96,165,250,0.15);
+        }
+        .btn {
+            width: 100%;
+            padding: 15px 18px;
+            border: none;
+            border-radius: 14px;
+            background: linear-gradient(90deg, #2563eb 0%, #3b82f6 100%);
+            color: white;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 8px;
+        }
+        .btn:hover {
+            opacity: 0.96;
+        }
+        .hidden {
+            display: none;
+        }
+        .result-header {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 16px;
+            align-items: center;
+            margin-bottom: 18px;
+        }
+        .badge {
+            display: inline-block;
+            padding: 8px 12px;
+            border-radius: 999px;
+            background: rgba(59,130,246,0.15);
+            color: #93c5fd;
+            font-size: 13px;
+            border: 1px solid rgba(96,165,250,0.25);
+        }
+        .score-box {
+            min-width: 180px;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(37,99,235,0.18), rgba(14,165,233,0.12));
+            border: 1px solid rgba(96,165,250,0.18);
+            border-radius: 18px;
+            padding: 16px;
+        }
+        .score-num {
+            font-size: 40px;
+            font-weight: 800;
+            color: #f8fbff;
+            line-height: 1;
+        }
+        .score-label {
+            margin-top: 8px;
+            color: #bfdbfe;
+            font-size: 14px;
+        }
+        .section-title {
+            font-size: 18px;
+            margin: 24px 0 14px;
+            color: #f8fbff;
+        }
+        .metric {
+            margin-bottom: 14px;
+        }
+        .metric-top {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            margin-bottom: 6px;
+            color: #d8e7ff;
+        }
+        .bar {
+            height: 10px;
+            background: #1e293b;
+            border-radius: 999px;
+            overflow: hidden;
+        }
+        .fill {
+            height: 100%;
+            border-radius: 999px;
+            background: linear-gradient(90deg, #38bdf8 0%, #2563eb 100%);
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+        .mini-card {
+            background: rgba(15, 23, 42, 0.75);
+            border: 1px solid rgba(148,163,184,0.14);
+            border-radius: 16px;
+            padding: 16px;
+        }
+        .mini-card h3 {
+            margin: 0 0 8px;
+            font-size: 15px;
+            color: #f8fbff;
+        }
+        .mini-card p {
+            margin: 0;
+            color: #c7d7f2;
+            line-height: 1.7;
+            font-size: 14px;
+        }
+        ul {
+            margin: 10px 0 0 18px;
+            padding: 0;
+            color: #d7e5fb;
+            line-height: 1.8;
+        }
+        .timeline {
+            border-left: 2px solid rgba(96,165,250,0.28);
+            margin-left: 8px;
+            padding-left: 18px;
+        }
+        .step {
+            margin-bottom: 16px;
+            position: relative;
+        }
+        .step::before {
+            content: "";
+            position: absolute;
+            left: -24px;
+            top: 4px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #60a5fa;
+            box-shadow: 0 0 0 4px rgba(96,165,250,0.12);
+        }
+        .step-title {
+            font-weight: 700;
+            color: #f8fbff;
+            margin-bottom: 4px;
+        }
+        .step-desc {
+            color: #bfd0ea;
+            font-size: 14px;
+            line-height: 1.7;
+        }
+        .footer-note {
+            margin-top: 16px;
+            font-size: 12px;
+            line-height: 1.7;
+            color: #8ea3c7;
+        }
+        @media (max-width: 640px) {
+            h1 { font-size: 28px; }
+            .grid { grid-template-columns: 1fr; }
+            .result-header { flex-direction: column; align-items: stretch; }
+            .score-box { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="hero">
+            <div class="eyebrow">AI EDUCATION PLANNING CHECK</div>
+            <h1>家庭教育资金体检</h1>
+            <p class="subtitle">
+                用 3 分钟了解家庭目前所处阶段、时间紧迫度、账户结构复杂度、
+                税务敏感度与助学金敏感度，获得一份可读性更强的结构观察结果。
+            </p>
+        </div>
+
+        <div class="card" id="formCard">
+            <h2>开始测评</h2>
+            <p class="desc">这是一份演示版测评，重点展示结果结构与产品方向。完成后会自动生成一页体检结果。</p>
+
+            <div class="question">
+                <label for="age">1. 孩子的年龄阶段</label>
+                <select id="age">
+                    <option value="2">0–5岁</option>
+                    <option value="4">6–10岁</option>
+                    <option value="7">11–14岁</option>
+                    <option value="10">15–18岁</option>
+                </select>
+            </div>
+
+            <div class="question">
+                <label for="prepare">2. 是否已经开始准备教育资金</label>
+                <select id="prepare">
+                    <option value="2">已有专项教育资金</option>
+                    <option value="5">有储蓄但没有专门安排</option>
+                    <option value="8">尚未开始准备</option>
+                </select>
+            </div>
+
+            <div class="question">
+                <label for="childAsset">3. 是否有孩子名下资产</label>
+                <select id="childAsset">
+                    <option value="1">没有</option>
+                    <option value="9">有</option>
+                </select>
+            </div>
+
+            <div class="question">
+                <label for="saving">4. 家庭每月大约可储蓄金额</label>
+                <select id="saving">
+                    <option value="9">500以下</option>
+                    <option value="6">500–2000</option>
+                    <option value="3">2000–5000</option>
+                    <option value="1">5000以上</option>
+                </select>
+            </div>
+
+            <div class="question">
+                <label for="insurance">5. 是否有长期寿险保障</label>
+                <select id="insurance">
+                    <option value="2">有</option>
+                    <option value="8">没有</option>
+                </select>
+            </div>
+
+            <div class="question">
+                <label for="incomeType">6. 家庭主要收入类型</label>
+                <select id="incomeType">
+                    <option value="2">W2收入为主</option>
+                    <option value="5">自雇收入为主</option>
+                    <option value="7">投资收入占比较高</option>
+                    <option value="6">混合收入</option>
+                </select>
+            </div>
+
+            <div class="question">
+                <label for="overseas">7. 是否存在海外资产或海外收入</label>
+                <select id="overseas">
+                    <option value="1">没有</option>
+                    <option value="8">有</option>
+                </select>
+            </div>
+
+            <button class="btn" onclick="calculateResult()">生成体检结果</button>
+        </div>
+
+        <div class="card hidden" id="resultCard">
+            <div class="result-header">
+                <div>
+                    <span class="badge" id="phaseBadge">家庭阶段</span>
+                    <h2 id="typeTitle" style="margin-top:12px;">规划准备型家庭</h2>
+                    <p class="desc" id="summaryText" style="margin-bottom:0;"></p>
+                </div>
+                <div class="score-box">
+                    <div class="score-num" id="totalScore">72</div>
+                    <div class="score-label">教育资金准备度 / 100</div>
+                </div>
+            </div>
+
+            <div class="section-title">六大结构指数</div>
+
+            <div class="metric">
+                <div class="metric-top"><span>时间紧迫指数</span><span id="timeValue">0</span></div>
+                <div class="bar"><div class="fill" id="timeBar" style="width:0%"></div></div>
+            </div>
+
+            <div class="metric">
+                <div class="metric-top"><span>教育资金准备度指数</span><span id="prepValue">0</span></div>
+                <div class="bar"><div class="fill" id="prepBar" style="width:0%"></div></div>
+            </div>
+
+            <div class="metric">
+                <div class="metric-top"><span>现金流弹性指数</span><span id="cashValue">0</span></div>
+                <div class="bar"><div class="fill" id="cashBar" style="width:0%"></div></div>
+            </div>
+
+            <div class="metric">
+                <div class="metric-top"><span>保障完整度指数</span><span id="protectValue">0</span></div>
+                <div class="bar"><div class="fill" id="protectBar" style="width:0%"></div></div>
+            </div>
+
+            <div class="metric">
+                <div class="metric-top"><span>税务敏感指数</span><span id="taxValue">0</span></div>
+                <div class="bar"><div class="fill" id="taxBar" style="width:0%"></div></div>
+            </div>
+
+            <div class="metric">
+                <div class="metric-top"><span>助学金敏感指数</span><span id="aidValue">0</span></div>
+                <div class="bar"><div class="fill" id="aidBar" style="width:0%"></div></div>
+            </div>
+
+            <div class="section-title">系统观察</div>
+            <div class="grid">
+                <div class="mini-card">
+                    <h3>当前特点</h3>
+                    <p id="observation1"></p>
+                </div>
+                <div class="mini-card">
+                    <h3>重点关注</h3>
+                    <p id="observation2"></p>
+                </div>
+            </div>
+
+            <div class="section-title">未来阶段路线</div>
+            <div class="timeline">
+                <div class="step">
+                    <div class="step-title">当前阶段</div>
+                    <div class="step-desc" id="timeline1"></div>
+                </div>
+                <div class="step">
+                    <div class="step-title">下一阶段</div>
+                    <div class="step-desc" id="timeline2"></div>
+                </div>
+                <div class="step">
+                    <div class="step-title">后续方向</div>
+                    <div class="step-desc" id="timeline3"></div>
+                </div>
+            </div>
+
+            <div class="section-title">下一步建议</div>
+            <ul id="adviceList"></ul>
+
+            <div class="footer-note">
+                本结果为演示版结构观察，不构成税务、法律、投资或保险建议。未来可扩展为经纪人后台版、PDF 报告版与 AI 解释版。
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function clamp10(x) {
+            return Math.max(0, Math.min(10, x));
+        }
+
+        function setBar(id, value) {
+            document.getElementById(id).style.width = (value * 10) + "%";
+        }
+
+        function calculateResult() {
+            const age = Number(document.getElementById("age").value);
+            const prepare = Number(document.getElementById("prepare").value);
+            const childAsset = Number(document.getElementById("childAsset").value);
+            const saving = Number(document.getElementById("saving").value);
+            const insurance = Number(document.getElementById("insurance").value);
+            const incomeType = Number(document.getElementById("incomeType").value);
+            const overseas = Number(document.getElementById("overseas").value);
+
+            const timeIndex = clamp10(age * 0.7 + prepare * 0.3);
+            const prepIndex = clamp10((10 - prepare) * 0.9);
+            const cashIndex = clamp10(saving * 0.6 + 2);
+            const protectIndex = clamp10((insurance + prepare) / 2);
+            const taxIndex = clamp10(incomeType * 0.6 + overseas * 0.4);
+            const aidIndex = clamp10(childAsset * 0.7 + prepare * 0.15 + overseas * 0.15);
+
+            let totalScore = 100 - (
+                timeIndex * 1.4 +
+                prepIndex * 1.1 +
+                cashIndex * 1.0 +
+                protectIndex * 1.1 +
+                taxIndex * 0.9 +
+                aidIndex * 1.1
+            );
+            totalScore = Math.max(28, Math.min(96, Math.round(totalScore)));
+
+            let familyType = "";
+            let phase = "";
+            let summary = "";
+
+            if (age <= 4) {
+                phase = "长期准备期";
+            } else if (age <= 7) {
+                phase = "规划建立期";
+            } else {
+                phase = "时间窗口期";
+            }
+
+            const maxIndex = Math.max(timeIndex, cashIndex, protectIndex, taxIndex, aidIndex);
+
+            if (maxIndex === timeIndex) {
+                familyType = "时间窗口型家庭";
+                summary = "距离升学时间逐渐接近，当前阶段更适合优先关注时间安排、账户归属与教育资金准备节奏。";
+            } else if (maxIndex === aidIndex) {
+                familyType = "助学金敏感型家庭";
+                summary = "当前家庭在助学金相关填写与资产归类方面需要更早建立认知，适合先做一次结构梳理。";
+            } else if (maxIndex === taxIndex) {
+                familyType = "税务敏感型家庭";
+                summary = "家庭收入与资产来源相对多样，后续更适合重点关注资料准备完整度与长期安排的协调性。";
+            } else if (maxIndex === cashIndex) {
+                familyType = "现金流平衡型家庭";
+                summary = "当前阶段更适合先建立稳定储蓄节奏与教育资金准备顺序，再逐步完善长期安排。";
+            } else {
+                familyType = "规划准备型家庭";
+                summary = "当前仍处于可以逐步建立教育资金准备框架的阶段，时间相对可控，适合尽早形成长期习惯。";
+            }
+
+            document.getElementById("phaseBadge").textContent = phase;
+            document.getElementById("typeTitle").textContent = familyType;
+            document.getElementById("summaryText").textContent = summary;
+            document.getElementById("totalScore").textContent = totalScore;
+
+            document.getElementById("timeValue").textContent = timeIndex.toFixed(1);
+            document.getElementById("prepValue").textContent = prepIndex.toFixed(1);
+            document.getElementById("cashValue").textContent = cashIndex.toFixed(1);
+            document.getElementById("protectValue").textContent = protectIndex.toFixed(1);
+            document.getElementById("taxValue").textContent = taxIndex.toFixed(1);
+            document.getElementById("aidValue").textContent = aidIndex.toFixed(1);
+
+            setBar("timeBar", timeIndex);
+            setBar("prepBar", prepIndex);
+            setBar("cashBar", cashIndex);
+            setBar("protectBar", protectIndex);
+            setBar("taxBar", taxIndex);
+            setBar("aidBar", aidIndex);
+
+            document.getElementById("observation1").textContent =
+                `系统观察到当前家庭阶段为「${phase}」，其中最需要留意的部分是「${familyType.replace("家庭","")}」。`;
+
+            document.getElementById("observation2").textContent =
+                `六大指数中，时间、助学金、税务与保障维度的组合，决定了后续沟通更适合先谈规则理解，再谈准备方向。`;
+
+            document.getElementById("timeline1").textContent =
+                phase === "长期准备期"
+                    ? "当前最大的优势是时间仍充足，重点不在一次性准备金额，而在于尽早建立教育资金习惯。"
+                    : phase === "规划建立期"
+                    ? "当前正适合建立更清晰的教育资金安排框架，逐步理解账户分类与长期节奏。"
+                    : "当前已进入相对敏感的时间窗口，后续更需要优先关注时间顺序与资料完整度。";
+
+            document.getElementById("timeline2").textContent =
+                "随着孩子年龄增长，家庭通常会逐步从"先存起来"过渡到"怎么放、什么时候用、哪些信息需要提前准备"。";
+
+            document.getElementById("timeline3").textContent =
+                "后续更适合形成一份完整的家庭教育资金梳理结果，把时间、账户、现金流与长期保障放在同一张图上看。";
+
+            const advice = [];
+            if (timeIndex >= 7) advice.push("优先确认时间窗口，避免把所有准备集中到后期。");
+            if (aidIndex >= 6) advice.push("尽早了解不同账户在表格中的填写方式与归类差异。");
+            if (taxIndex >= 6) advice.push("对收入来源与海外相关信息做一次提前梳理。");
+            if (cashIndex >= 6) advice.push("先建立更稳定的教育资金储蓄节奏，再考虑后续安排。");
+            if (protectIndex >= 5) advice.push("同步检查长期保障与教育准备是否平衡。");
+            if (advice.length < 3) {
+                advice.push("持续记录家庭教育资金准备进度。");
+                advice.push("逐步建立长期教育资金思路。");
+                advice.push("后续可生成更完整的结构分析报告。");
+            }
+
+            document.getElementById("adviceList").innerHTML =
+                advice.slice(0, 4).map(item => `<li>${item}</li>`).join("");
+
+            document.getElementById("resultCard").classList.remove("hidden");
+            document.getElementById("resultCard").scrollIntoView({ behavior: "smooth" });
+        }
+    </script>
+</body>
+</html>
