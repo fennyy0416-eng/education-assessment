@@ -5,93 +5,188 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>家庭教育资金结构分析报告</title>
     <style>
+        * { box-sizing: border-box; }
+
         body {
             margin: 0;
             padding: 40px 20px;
             font-family: Arial, "PingFang SC", "Microsoft YaHei", sans-serif;
-            background: #f3f6fb;
+            background: #eef3f9;
             color: #1f2937;
         }
+
         .report {
-            max-width: 900px;
+            max-width: 920px;
             margin: 0 auto;
-            background: white;
-            border-radius: 18px;
+            background: #ffffff;
+            border-radius: 22px;
             padding: 40px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            box-shadow: 0 12px 36px rgba(15, 23, 42, 0.08);
         }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-bottom: 28px;
+            border-bottom: 1px solid #e5e7eb;
+            padding-bottom: 20px;
+        }
+
+        .brand {
+            font-size: 13px;
+            letter-spacing: 1px;
+            color: #2563eb;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
         h1 {
             margin: 0 0 8px;
             font-size: 32px;
             color: #0f172a;
+            line-height: 1.2;
         }
+
         .sub {
             color: #64748b;
-            margin-bottom: 28px;
             line-height: 1.7;
+            max-width: 620px;
+            font-size: 14px;
         }
+
+        .meta {
+            text-align: right;
+            min-width: 180px;
+            color: #64748b;
+            font-size: 13px;
+            line-height: 1.8;
+        }
+
         .score-box {
+            margin-top: 10px;
             background: linear-gradient(135deg, #dbeafe, #eff6ff);
             border: 1px solid #bfdbfe;
-            border-radius: 16px;
+            border-radius: 18px;
             padding: 24px;
             text-align: center;
             margin-bottom: 28px;
         }
+
         .score {
-            font-size: 52px;
-            font-weight: 700;
+            font-size: 56px;
+            font-weight: 800;
             color: #2563eb;
             line-height: 1;
+            margin-bottom: 8px;
         }
+
+        .score-label {
+            font-size: 15px;
+            color: #334155;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin-bottom: 28px;
+        }
+
+        .summary-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            padding: 18px;
+        }
+
+        .summary-title {
+            font-size: 13px;
+            color: #64748b;
+            margin-bottom: 8px;
+        }
+
+        .summary-value {
+            font-size: 22px;
+            font-weight: 700;
+            color: #0f172a;
+        }
+
         .section {
             margin-top: 28px;
         }
+
         .section h2 {
             font-size: 20px;
-            margin-bottom: 12px;
+            margin: 0 0 14px;
             color: #0f172a;
             border-left: 4px solid #3b82f6;
             padding-left: 10px;
         }
+
         .card {
             background: #f8fafc;
             border: 1px solid #e2e8f0;
             border-radius: 14px;
             padding: 18px;
             line-height: 1.8;
+            color: #334155;
         }
+
         .metrics {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1fr 1fr 1fr;
             gap: 12px;
-            margin-top: 12px;
         }
+
         .metric-box {
             background: #f8fafc;
             border: 1px solid #e2e8f0;
             border-radius: 12px;
             padding: 14px;
         }
+
         .metric-name {
-            font-size: 14px;
+            font-size: 13px;
             color: #64748b;
-            margin-bottom: 6px;
+            margin-bottom: 8px;
         }
+
         .metric-value {
             font-size: 24px;
             font-weight: 700;
             color: #0f172a;
         }
-        .footer {
-            margin-top: 30px;
+
+        .metric-note {
+            margin-top: 6px;
             font-size: 12px;
-            line-height: 1.8;
-            color: #64748b;
+            color: #94a3b8;
         }
+
+        ul {
+            margin: 8px 0 0 20px;
+            padding: 0;
+            color: #334155;
+        }
+
+        li {
+            margin-bottom: 8px;
+            line-height: 1.7;
+        }
+
+        .actions {
+            margin-top: 30px;
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
         .btn {
             display: inline-block;
-            margin-top: 28px;
             padding: 14px 22px;
             background: #2563eb;
             color: white;
@@ -99,40 +194,114 @@
             border-radius: 10px;
             font-weight: 600;
         }
-        @media (max-width: 700px) {
-            .metrics { grid-template-columns: 1fr; }
-            .report { padding: 24px; }
-            h1 { font-size: 28px; }
+
+        .btn.secondary {
+            background: #e2e8f0;
+            color: #0f172a;
+        }
+
+        .footer {
+            margin-top: 32px;
+            font-size: 12px;
+            line-height: 1.8;
+            color: #64748b;
+            border-top: 1px solid #e5e7eb;
+            padding-top: 18px;
+        }
+
+        @media (max-width: 760px) {
+            .report {
+                padding: 24px;
+            }
+
+            h1 {
+                font-size: 28px;
+            }
+
+            .summary-grid,
+            .metrics {
+                grid-template-columns: 1fr;
+            }
+
+            .meta {
+                text-align: left;
+            }
         }
     </style>
 </head>
 <body>
     <div class="report">
-        <h1>家庭教育资金结构分析报告</h1>
-        <div class="sub">基于当前填写信息生成的演示版结果，仅用于结构观察与沟通参考。</div>
+        <div class="topbar">
+            <div>
+                <div class="brand">Education Structure Report</div>
+                <h1>家庭教育资金结构分析报告</h1>
+                <div class="sub">
+                    本报告基于当前测评信息生成，用于展示家庭教育资金准备阶段、结构敏感度与后续沟通重点。
+                    适合作为演示版结果页、顾问沟通页与后续 PDF 报告模板基础。
+                </div>
+            </div>
+            <div class="meta">
+                报告日期：<span id="reportDate"></span><br>
+                报告版本：Demo v1.0
+            </div>
+        </div>
 
         <div class="score-box">
             <div class="score" id="score">78</div>
-            <div>教育资金准备度 / 100</div>
+            <div class="score-label">教育资金准备度 / 100</div>
+        </div>
+
+        <div class="summary-grid">
+            <div class="summary-card">
+                <div class="summary-title">当前家庭阶段</div>
+                <div class="summary-value" id="phase">规划建立期</div>
+            </div>
+            <div class="summary-card">
+                <div class="summary-title">家庭类型判断</div>
+                <div class="summary-value" id="familyType">规划准备型家庭</div>
+            </div>
         </div>
 
         <div class="section">
-            <h2>家庭阶段判断</h2>
-            <div class="card">
-                当前阶段：<span id="phase">规划建立期</span><br>
-                家庭类型：<span id="familyType">规划准备型家庭</span>
+            <h2>阶段概述</h2>
+            <div class="card" id="summary">
+                当前仍处于可以逐步建立教育资金准备框架的阶段，时间相对可控，适合尽早形成长期习惯。
             </div>
         </div>
 
         <div class="section">
             <h2>六大结构指数</h2>
             <div class="metrics">
-                <div class="metric-box"><div class="metric-name">时间紧迫指数</div><div class="metric-value" id="timeIndex">0</div></div>
-                <div class="metric-box"><div class="metric-name">教育准备度指数</div><div class="metric-value" id="prepIndex">0</div></div>
-                <div class="metric-box"><div class="metric-name">现金流弹性指数</div><div class="metric-value" id="cashIndex">0</div></div>
-                <div class="metric-box"><div class="metric-name">保障完整度指数</div><div class="metric-value" id="protectIndex">0</div></div>
-                <div class="metric-box"><div class="metric-name">税务敏感指数</div><div class="metric-value" id="taxIndex">0</div></div>
-                <div class="metric-box"><div class="metric-name">助学金敏感指数</div><div class="metric-value" id="aidIndex">0</div></div>
+                <div class="metric-box">
+                    <div class="metric-name">时间紧迫指数</div>
+                    <div class="metric-value" id="timeIndex">0</div>
+                    <div class="metric-note">越高表示时间越敏感</div>
+                </div>
+                <div class="metric-box">
+                    <div class="metric-name">教育准备度指数</div>
+                    <div class="metric-value" id="prepIndex">0</div>
+                    <div class="metric-note">越高表示准备基础越弱</div>
+                </div>
+                <div class="metric-box">
+                    <div class="metric-name">现金流弹性指数</div>
+                    <div class="metric-value" id="cashIndex">0</div>
+                    <div class="metric-note">越高表示现金流压力越大</div>
+                </div>
+                <div class="metric-box">
+                    <div class="metric-name">保障完整度指数</div>
+                    <div class="metric-value" id="protectIndex">0</div>
+                    <div class="metric-note">越高表示保障缺口越明显</div>
+                </div>
+                <div class="metric-box">
+                    <div class="metric-name">税务敏感指数</div>
+                    <div class="metric-value" id="taxIndex">0</div>
+                    <div class="metric-note">越高表示税务维度更复杂</div>
+                </div>
+                <div class="metric-box">
+                    <div class="metric-name">助学金敏感指数</div>
+                    <div class="metric-value" id="aidIndex">0</div>
+                    <div class="metric-note">越高表示表格归类更需关注</div>
+                </div>
             </div>
         </div>
 
@@ -141,28 +310,41 @@
             <div class="card" id="observation"></div>
         </div>
 
-        <a class="btn" href="./index.html">返回测评页</a>
+        <div class="section">
+            <h2>重点建议</h2>
+            <div class="card">
+                <ul id="adviceList"></ul>
+            </div>
+        </div>
+
+        <div class="actions">
+            <a class="btn secondary" href="./index.html">返回测评页</a>
+        </div>
 
         <div class="footer">
             本页面为演示版结构分析报告，不构成税务、法律、投资或保险建议。
+            后续版本可扩展为动态 PDF 导出、客户留资、顾问后台与产品匹配逻辑。
         </div>
     </div>
 
     <script>
-        var score = localStorage.getItem("edu_score") || "78";
-        var phase = localStorage.getItem("edu_phase") || "规划建立期";
-        var familyType = localStorage.getItem("edu_type") || "规划准备型家庭";
+        const score = localStorage.getItem("edu_score") || "78";
+        const phase = localStorage.getItem("edu_phase") || "规划建立期";
+        const familyType = localStorage.getItem("edu_type") || "规划准备型家庭";
+        const summary = localStorage.getItem("edu_summary") || "当前仍处于可以逐步建立教育资金准备框架的阶段，时间相对可控，适合尽早形成长期习惯。";
 
-        var timeIndex = localStorage.getItem("edu_timeIndex") || "0";
-        var prepIndex = localStorage.getItem("edu_prepIndex") || "0";
-        var cashIndex = localStorage.getItem("edu_cashIndex") || "0";
-        var protectIndex = localStorage.getItem("edu_protectIndex") || "0";
-        var taxIndex = localStorage.getItem("edu_taxIndex") || "0";
-        var aidIndex = localStorage.getItem("edu_aidIndex") || "0";
+        const timeIndex = localStorage.getItem("edu_timeIndex") || "0";
+        const prepIndex = localStorage.getItem("edu_prepIndex") || "0";
+        const cashIndex = localStorage.getItem("edu_cashIndex") || "0";
+        const protectIndex = localStorage.getItem("edu_protectIndex") || "0";
+        const taxIndex = localStorage.getItem("edu_taxIndex") || "0";
+        const aidIndex = localStorage.getItem("edu_aidIndex") || "0";
 
         document.getElementById("score").innerText = score;
         document.getElementById("phase").innerText = phase;
         document.getElementById("familyType").innerText = familyType;
+        document.getElementById("summary").innerText = summary;
+
         document.getElementById("timeIndex").innerText = timeIndex;
         document.getElementById("prepIndex").innerText = prepIndex;
         document.getElementById("cashIndex").innerText = cashIndex;
@@ -170,8 +352,31 @@
         document.getElementById("taxIndex").innerText = taxIndex;
         document.getElementById("aidIndex").innerText = aidIndex;
 
+        const today = new Date();
+        const yyyy = today.getFullYear();
+        const mm = String(today.getMonth() + 1).padStart(2, "0");
+        const dd = String(today.getDate()).padStart(2, "0");
+        document.getElementById("reportDate").innerText = `${yyyy}-${mm}-${dd}`;
+
+        let advice = [];
+        if (Number(timeIndex) >= 7) advice.push("优先确认时间窗口，避免把准备动作过度集中到后期。");
+        if (Number(aidIndex) >= 6) advice.push("尽早了解不同账户在表格中的填写方式与归类差异。");
+        if (Number(taxIndex) >= 6) advice.push("建议对收入来源与海外相关信息做一次提前梳理。");
+        if (Number(cashIndex) >= 6) advice.push("建议先建立更稳定的教育资金储蓄节奏，再考虑后续安排。");
+        if (Number(protectIndex) >= 5) advice.push("同步检查长期保障与教育准备是否平衡。");
+
+        if (advice.length === 0) {
+            advice = [
+                "持续记录家庭教育资金准备进度。",
+                "逐步建立长期教育资金思路。",
+                "后续可生成更完整的结构分析报告。"
+            ];
+        }
+
+        document.getElementById("adviceList").innerHTML = advice.map(item => `<li>${item}</li>`).join("");
+
         document.getElementById("observation").innerText =
-            "当前阶段为「" + phase + "」，家庭类型为「" + familyType + "」。系统判断目前最值得优先关注的是时间安排、账户理解与长期准备节奏之间的配合。";
+            `当前阶段为「${phase}」，家庭类型为「${familyType}」。系统判断目前最值得优先关注的是时间安排、结构理解与长期准备节奏之间的配合。`;
     </script>
 </body>
 </html>
