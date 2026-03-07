@@ -61,6 +61,28 @@
             padding: 18px;
             line-height: 1.8;
         }
+        .metrics {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 12px;
+        }
+        .metric-box {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 14px;
+        }
+        .metric-name {
+            font-size: 14px;
+            color: #64748b;
+            margin-bottom: 6px;
+        }
+        .metric-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: #0f172a;
+        }
         ul {
             margin: 8px 0 0 20px;
             padding: 0;
@@ -84,34 +106,76 @@
             border-radius: 10px;
             font-weight: 600;
         }
+        @media (max-width: 700px) {
+            .metrics {
+                grid-template-columns: 1fr;
+            }
+            .report {
+                padding: 24px;
+            }
+            h1 {
+                font-size: 28px;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="report">
         <h1>家庭教育资金结构分析报告</h1>
         <div class="sub">
-            这是演示版报告页，用于展示未来平台的报告结构。后续可与测评页联动，自动带入客户评分、结构类型与建议。
+            基于当前填写信息生成的演示版结果，仅用于结构观察与沟通参考。后续可升级为顾问版报告、PDF 下载版与客户留资版。
         </div>
 
         <div class="score-box">
-            <div class="score">78</div>
+            <div class="score" id="score">78</div>
             <div>教育资金准备度 / 100</div>
         </div>
 
         <div class="section">
             <h2>家庭阶段判断</h2>
             <div class="card">
-                当前阶段：规划建立期<br>
-                家庭类型：规划准备型家庭<br>
-                当前更适合优先建立教育资金安排框架，并逐步理解账户分类、时间节奏与长期保障之间的关系。
+                当前阶段：<span id="phase">规划建立期</span><br>
+                家庭类型：<span id="familyType">规划准备型家庭</span><br>
+                <span id="summary">
+                    当前更适合优先建立教育资金安排框架，并逐步理解账户分类、时间节奏与长期保障之间的关系。
+                </span>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>六大结构指数</h2>
+            <div class="metrics">
+                <div class="metric-box">
+                    <div class="metric-name">时间紧迫指数</div>
+                    <div class="metric-value" id="timeIndex">0</div>
+                </div>
+                <div class="metric-box">
+                    <div class="metric-name">教育准备度指数</div>
+                    <div class="metric-value" id="prepIndex">0</div>
+                </div>
+                <div class="metric-box">
+                    <div class="metric-name">现金流弹性指数</div>
+                    <div class="metric-value" id="cashIndex">0</div>
+                </div>
+                <div class="metric-box">
+                    <div class="metric-name">保障完整度指数</div>
+                    <div class="metric-value" id="protectIndex">0</div>
+                </div>
+                <div class="metric-box">
+                    <div class="metric-name">税务敏感指数</div>
+                    <div class="metric-value" id="taxIndex">0</div>
+                </div>
+                <div class="metric-box">
+                    <div class="metric-name">助学金敏感指数</div>
+                    <div class="metric-value" id="aidIndex">0</div>
+                </div>
             </div>
         </div>
 
         <div class="section">
             <h2>系统观察</h2>
-            <div class="card">
-                当前家庭已经具备一定教育准备基础，但在现金流安排、长期节奏与账户结构的整体协同上，仍有进一步梳理空间。
-                对于后续教育资金规划来说，越早形成完整框架，后面越容易避免临时应对。
+            <div class="card" id="observation">
+                当前家庭已经具备一定教育准备基础，但在现金流安排、长期节奏与账户结构的整体协同上，仍有进一步梳理空间。对于后续教育资金规划来说，越早形成完整框架，后面越容易避免临时应对。
             </div>
         </div>
 
@@ -127,7 +191,7 @@
         <div class="section">
             <h2>下一步建议</h2>
             <div class="card">
-                <ul>
+                <ul id="adviceList">
                     <li>优先确认教育资金准备节奏，而不是只关注单次金额。</li>
                     <li>尽早了解不同账户在表格填写中的差异。</li>
                     <li>同步检查长期保障与教育准备是否平衡。</li>
@@ -142,5 +206,50 @@
             本页面为演示版结构分析报告，不构成税务、法律、投资或保险建议。未来版本可扩展为动态评分、PDF 导出、顾问后台与客户留资系统。
         </div>
     </div>
+
+    <script>
+        const score = localStorage.getItem("edu_score") || "78";
+        const phase = localStorage.getItem("edu_phase") || "规划建立期";
+        const familyType = localStorage.getItem("edu_type") || "规划准备型家庭";
+        const summary = localStorage.getItem("edu_summary") || "当前仍处于可以逐步建立教育资金准备框架的阶段，时间相对可控，适合尽早形成长期习惯。";
+
+        const timeIndex = localStorage.getItem("edu_timeIndex") || "0";
+        const prepIndex = localStorage.getItem("edu_prepIndex") || "0";
+        const cashIndex = localStorage.getItem("edu_cashIndex") || "0";
+        const protectIndex = localStorage.getItem("edu_protectIndex") || "0";
+        const taxIndex = localStorage.getItem("edu_taxIndex") || "0";
+        const aidIndex = localStorage.getItem("edu_aidIndex") || "0";
+
+        document.getElementById("score").innerText = score;
+        document.getElementById("phase").innerText = phase;
+        document.getElementById("familyType").innerText = familyType;
+        document.getElementById("summary").innerText = summary;
+
+        document.getElementById("timeIndex").innerText = timeIndex;
+        document.getElementById("prepIndex").innerText = prepIndex;
+        document.getElementById("cashIndex").innerText = cashIndex;
+        document.getElementById("protectIndex").innerText = protectIndex;
+        document.getElementById("taxIndex").innerText = taxIndex;
+        document.getElementById("aidIndex").innerText = aidIndex;
+
+        let advice = [];
+        if (Number(timeIndex) >= 7) advice.push("优先确认时间窗口，避免把所有准备集中到后期。");
+        if (Number(aidIndex) >= 6) advice.push("尽早了解不同账户在表格中的填写方式与归类差异。");
+        if (Number(taxIndex) >= 6) advice.push("对收入来源与海外相关信息做一次提前梳理。");
+        if (Number(cashIndex) >= 6) advice.push("先建立更稳定的教育资金储蓄节奏，再考虑后续安排。");
+        if (Number(protectIndex) >= 5) advice.push("同步检查长期保障与教育准备是否平衡。");
+
+        if (advice.length === 0) {
+            advice = [
+                "持续记录家庭教育资金准备进度。",
+                "逐步建立长期教育资金思路。",
+                "后续可生成更完整的结构分析报告。"
+            ];
+        }
+
+        document.getElementById("adviceList").innerHTML = advice.map(item => `<li>${item}</li>`).join("");
+        document.getElementById("observation").innerText =
+            `当前阶段为「${phase}」，家庭类型为「${familyType}」。系统判断目前最值得优先关注的是时间安排、结构理解与长期准备节奏之间的配合。`;
+    </script>
 </body>
 </html>
