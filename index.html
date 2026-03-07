@@ -353,7 +353,7 @@
         </select>
       </div>
 
-      <button class="btn" onclick="calculateResult()">生成体检结果</button>
+      <button class="btn" typonclick="calculateResult()">生成体检结果</button>
     </div>
 
     <div class="card hidden" id="resultCard">
@@ -448,218 +448,80 @@
     </div>
   </div>
 
-  <script>
-    function clamp10(x) {
-      return Math.max(0, Math.min(10, x));
+<script>
+  function clamp10(x) {
+    return Math.max(0, Math.min(10, x));
+  }
+
+  function calculateResult() {
+    var age = Number(document.getElementById("age").value || 0);
+    var prepare = Number(document.getElementById("prepare").value || 0);
+    var childAsset = Number(document.getElementById("childAsset").value || 0);
+    var saving = Number(document.getElementById("saving").value || 0);
+    var insurance = Number(document.getElementById("insurance").value || 0);
+    var incomeType = Number(document.getElementById("incomeType").value || 0);
+    var overseas = Number(document.getElementById("overseas").value || 0);
+
+    var timeIndex = clamp10(age * 0.7 + prepare * 0.3);
+    var prepIndex = clamp10((10 - prepare) * 0.9);
+    var cashIndex = clamp10(saving * 0.6 + 2);
+    var protectIndex = clamp10((insurance + prepare) / 2);
+    var taxIndex = clamp10(incomeType * 0.6 + overseas * 0.4);
+    var aidIndex = clamp10(childAsset * 0.7 + prepare * 0.15 + overseas * 0.15);
+
+    var totalScore = 100 - (
+      timeIndex * 1.4 +
+      prepIndex * 1.1 +
+      cashIndex * 1.0 +
+      protectIndex * 1.1 +
+      taxIndex * 0.9 +
+      aidIndex * 1.1
+    );
+    totalScore = Math.max(28, Math.min(96, Math.round(totalScore)));
+
+    var phase = "";
+    if (age <= 4) {
+      phase = "长期准备期";
+    } else if (age <= 7) {
+      phase = "规划建立期";
+    } else {
+      phase = "时间窗口期";
     }
 
-    function setBar(id, value) {
-      document.getElementById(id).style.width = (value * 10) + "%";
+    var familyType = "";
+    var summary = "";
+    var maxIndex = Math.max(timeIndex, cashIndex, protectIndex, taxIndex, aidIndex);
+
+    if (maxIndex === timeIndex) {
+      familyType = "时间窗口型家庭";
+      summary = "距离升学时间逐渐接近，当前阶段更适合优先关注时间安排、账户归属与教育资金准备节奏。";
+    } else if (maxIndex === aidIndex) {
+      familyType = "助学金敏感型家庭";
+      summary = "当前家庭在助学金相关填写与资产归类方面需要更早建立认知，适合先做一次结构梳理。";
+    } else if (maxIndex === taxIndex) {
+      familyType = "税务敏感型家庭";
+      summary = "家庭收入与资产来源相对多样，后续更适合重点关注资料准备完整度与长期安排的协调性。";
+    } else if (maxIndex === cashIndex) {
+      familyType = "现金流平衡型家庭";
+      summary = "当前阶段更适合先建立稳定储蓄节奏与教育资金准备顺序，再逐步完善长期安排。";
+    } else {
+      familyType = "规划准备型家庭";
+      summary = "当前仍处于可以逐步建立教育资金准备框架的阶段，时间相对可控，适合尽早形成长期习惯。";
     }
 
-    function pointOnRadar(cx, cy, radius, angleDeg, value) {
-      var r = radius * (value / 10);
-      var rad = (Math.PI / 180) * angleDeg;
-      return {
-        x: cx + r * Math.cos(rad),
-        y: cy + r * Math.sin(rad)
-      };
-    }
+    localStorage.setItem("edu_score", String(totalScore));
+    localStorage.setItem("edu_phase", phase);
+    localStorage.setItem("edu_type", familyType);
+    localStorage.setItem("edu_summary", summary);
+    localStorage.setItem("edu_timeIndex", timeIndex.toFixed(1));
+    localStorage.setItem("edu_prepIndex", prepIndex.toFixed(1));
+    localStorage.setItem("edu_cashIndex", cashIndex.toFixed(1));
+    localStorage.setItem("edu_protectIndex", protectIndex.toFixed(1));
+    localStorage.setItem("edu_taxIndex", taxIndex.toFixed(1));
+    localStorage.setItem("edu_aidIndex", aidIndex.toFixed(1));
 
-    function drawRadarSvg(values) {
-      var svg = document.getElementById("radarSvg");
-      if (!svg) return;
-
-      var cx = 180;
-      var cy = 180;
-      var radius = 110;
-      var angles = [-90, -30, 30, 90, 150, 210];
-      var labels = ["时间紧迫", "教育准备", "现金流弹性", "保障完整度", "税务敏感", "助学金敏感"];
-
-      var html = "";
-
-      for (var level = 2; level <= 10; level += 2) {
-        var pts = [];
-        for (var i = 0; i < angles.length; i++) {
-          var p = pointOnRadar(cx, cy, radius, angles[i], level);
-          pts.push(p.x.toFixed(1) + "," + p.y.toFixed(1));
-        }
-        html += '<polygon points="' + pts.join(" ") + '" fill="none" stroke="rgba(148,163,184,0.22)" stroke-width="1"></polygon>';
-      }
-
-      for (var j = 0; j < angles.length; j++) {
-        var outer = pointOnRadar(cx, cy, radius, angles[j], 10);
-        html += '<line x1="' + cx + '" y1="' + cy + '" x2="' + outer.x + '" y2="' + outer.y + '" stroke="rgba(148,163,184,0.22)" stroke-width="1"></line>';
-      }
-
-      for (var t = 2; t <= 10; t += 2) {
-        html += '<text x="' + cx + '" y="' + (cy - (radius * t / 10) + 4) + '" class="tick-text">' + t + '</text>';
-      }
-
-      var valuePts = [];
-      for (var k = 0; k < angles.length; k++) {
-        var vp = pointOnRadar(cx, cy, radius, angles[k], values[k]);
-        valuePts.push(vp.x.toFixed(1) + "," + vp.y.toFixed(1));
-      }
-
-      html += '<polygon points="' + valuePts.join(" ") + '" fill="rgba(59,130,246,0.20)" stroke="rgba(96,165,250,1)" stroke-width="2"></polygon>';
-
-      for (var m = 0; m < angles.length; m++) {
-        var dot = pointOnRadar(cx, cy, radius, angles[m], values[m]);
-        html += '<circle cx="' + dot.x + '" cy="' + dot.y + '" r="4" fill="rgba(147,197,253,1)" stroke="#fff" stroke-width="1.5"></circle>';
-      }
-
-      var labelRadius = 138;
-      for (var n = 0; n < angles.length; n++) {
-        var lr = pointOnRadar(cx, cy, labelRadius, angles[n], 10);
-        html += '<text x="' + lr.x + '" y="' + (lr.y + 4) + '" class="label-text">' + labels[n] + '</text>';
-      }
-
-      svg.innerHTML = html;
-    }
-
-    function calculateResult() {
-      var age = Number(document.getElementById("age").value);
-      var prepare = Number(document.getElementById("prepare").value);
-      var childAsset = Number(document.getElementById("childAsset").value);
-      var saving = Number(document.getElementById("saving").value);
-      var insurance = Number(document.getElementById("insurance").value);
-      var incomeType = Number(document.getElementById("incomeType").value);
-      var overseas = Number(document.getElementById("overseas").value);
-
-      var timeIndex = clamp10(age * 0.7 + prepare * 0.3);
-      var prepIndex = clamp10((10 - prepare) * 0.9);
-      var cashIndex = clamp10(saving * 0.6 + 2);
-      var protectIndex = clamp10((insurance + prepare) / 2);
-      var taxIndex = clamp10(incomeType * 0.6 + overseas * 0.4);
-      var aidIndex = clamp10(childAsset * 0.7 + prepare * 0.15 + overseas * 0.15);
-
-      var totalScore = 100 - (
-        timeIndex * 1.4 +
-        prepIndex * 1.1 +
-        cashIndex * 1.0 +
-        protectIndex * 1.1 +
-        taxIndex * 0.9 +
-        aidIndex * 1.1
-      );
-      totalScore = Math.max(28, Math.min(96, Math.round(totalScore)));
-
-      var familyType = "";
-      var phase = "";
-      var summary = "";
-
-      if (age <= 4) {
-        phase = "长期准备期";
-      } else if (age <= 7) {
-        phase = "规划建立期";
-      } else {
-        phase = "时间窗口期";
-      }
-
-      var maxIndex = Math.max(timeIndex, cashIndex, protectIndex, taxIndex, aidIndex);
-
-      if (maxIndex === timeIndex) {
-        familyType = "时间窗口型家庭";
-        summary = "距离升学时间逐渐接近，当前阶段更适合优先关注时间安排、账户归属与教育资金准备节奏。";
-      } else if (maxIndex === aidIndex) {
-        familyType = "助学金敏感型家庭";
-        summary = "当前家庭在助学金相关填写与资产归类方面需要更早建立认知，适合先做一次结构梳理。";
-      } else if (maxIndex === taxIndex) {
-        familyType = "税务敏感型家庭";
-        summary = "家庭收入与资产来源相对多样，后续更适合重点关注资料准备完整度与长期安排的协调性。";
-      } else if (maxIndex === cashIndex) {
-        familyType = "现金流平衡型家庭";
-        summary = "当前阶段更适合先建立稳定储蓄节奏与教育资金准备顺序，再逐步完善长期安排。";
-      } else {
-        familyType = "规划准备型家庭";
-        summary = "当前仍处于可以逐步建立教育资金准备框架的阶段，时间相对可控，适合尽早形成长期习惯。";
-      }
-
-      // 保存数据给 report.html 使用
-      localStorage.setItem("edu_score", totalScore);
-      localStorage.setItem("edu_phase", phase);
-      localStorage.setItem("edu_type", familyType);
-      localStorage.setItem("edu_summary", summary);
-      localStorage.setItem("edu_timeIndex", timeIndex.toFixed(1));
-      localStorage.setItem("edu_prepIndex", prepIndex.toFixed(1));
-      localStorage.setItem("edu_cashIndex", cashIndex.toFixed(1));
-      localStorage.setItem("edu_protectIndex", protectIndex.toFixed(1));
-      localStorage.setItem("edu_taxIndex", taxIndex.toFixed(1));
-      localStorage.setItem("edu_aidIndex", aidIndex.toFixed(1));
-
-      document.getElementById("phaseBadge").textContent = phase;
-      document.getElementById("typeTitle").textContent = familyType;
-      document.getElementById("summaryText").textContent = summary;
-      document.getElementById("totalScore").textContent = totalScore;
-
-      document.getElementById("timeValue").textContent = timeIndex.toFixed(1);
-      document.getElementById("prepValue").textContent = prepIndex.toFixed(1);
-      document.getElementById("cashValue").textContent = cashIndex.toFixed(1);
-      document.getElementById("protectValue").textContent = protectIndex.toFixed(1);
-      document.getElementById("taxValue").textContent = taxIndex.toFixed(1);
-      document.getElementById("aidValue").textContent = aidIndex.toFixed(1);
-
-      setBar("timeBar", timeIndex);
-      setBar("prepBar", prepIndex);
-      setBar("cashBar", cashIndex);
-      setBar("protectBar", protectIndex);
-      setBar("taxBar", taxIndex);
-      setBar("aidBar", aidIndex);
-
-      document.getElementById("observation1").textContent =
-        "系统观察到当前家庭阶段为「" + phase + "」，其中最需要留意的部分是「" + familyType.replace("家庭","") + "」。";
-
-      document.getElementById("observation2").textContent =
-        "六大指数中，时间、助学金、税务与保障维度的组合，决定了后续沟通更适合先谈规则理解，再谈准备方向。";
-
-      document.getElementById("timeline1").textContent =
-        phase === "长期准备期"
-          ? "当前最大的优势是时间仍充足，重点不在一次性准备金额，而在于尽早建立教育资金习惯。"
-          : phase === "规划建立期"
-          ? "当前正适合建立更清晰的教育资金安排框架，逐步理解账户分类与长期节奏。"
-          : "当前已进入相对敏感的时间窗口，后续更需要优先关注时间顺序与资料完整度。";
-
-      document.getElementById("timeline2").textContent =
-        "随着孩子年龄增长，家庭通常会逐步从"先存起来"过渡到"怎么放、什么时候用、哪些信息需要提前准备"。";
-
-      document.getElementById("timeline3").textContent =
-        "后续更适合形成一份完整的家庭教育资金梳理结果，把时间、账户、现金流与长期保障放在同一张图上看。";
-
-      var advice = [];
-      if (timeIndex >= 7) advice.push("优先确认时间窗口，避免把所有准备集中到后期。");
-      if (aidIndex >= 6) advice.push("尽早了解不同账户在表格中的填写方式与归类差异。");
-      if (taxIndex >= 6) advice.push("对收入来源与海外相关信息做一次提前梳理。");
-      if (cashIndex >= 6) advice.push("先建立更稳定的教育资金储蓄节奏，再考虑后续安排。");
-      if (protectIndex >= 5) advice.push("同步检查长期保障与教育准备是否平衡。");
-      if (advice.length < 3) {
-        advice.push("持续记录家庭教育资金准备进度。");
-        advice.push("逐步建立长期教育资金思路。");
-        advice.push("后续可生成更完整的结构分析报告。");
-      }
-
-      document.getElementById("adviceList").innerHTML =
-        advice.slice(0, 4).map(function(item) {
-          return "<li>" + item + "</li>";
-        }).join("");
-
-      document.getElementById("resultCard").classList.remove("hidden");
-
-      drawRadarSvg([
-        timeIndex,
-        prepIndex,
-        cashIndex,
-        protectIndex,
-        taxIndex,
-        aidIndex
-      ]);
-
-      document.getElementById("resultCard").scrollIntoView({ behavior: "smooth" });
-
-      // 自动跳转到报告页
-      setTimeout(function() {
-        window.location.href = "report.html";
-      }, 1200);
-    }
-  </script>
+    window.location.href = "report.html";
+  }
+</script>
 </body>
 </html>
