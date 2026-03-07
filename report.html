@@ -5,7 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>家庭教育资金结构分析报告</title>
   <style>
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
 
     body {
       margin: 0;
@@ -233,6 +235,9 @@
       text-decoration: none;
       border-radius: 10px;
       font-weight: 600;
+      border: none;
+      cursor: pointer;
+      font-size: 14px;
     }
 
     .btn.secondary {
@@ -268,6 +273,24 @@
         text-align: left;
       }
     }
+
+    @media print {
+      body {
+        background: white;
+        padding: 0;
+      }
+
+      .actions {
+        display: none;
+      }
+
+      .report {
+        box-shadow: none;
+        margin: 0;
+        max-width: 100%;
+        border-radius: 0;
+      }
+    }
   </style>
 </head>
 <body>
@@ -283,7 +306,7 @@
       </div>
       <div class="meta">
         报告日期：<span id="reportDate"></span><br>
-        报告版本：Demo v1.1
+        报告版本：Demo v1.2
       </div>
     </div>
 
@@ -365,6 +388,7 @@
     </div>
 
     <div class="actions">
+      <button class="btn" onclick="downloadPDF()">下载 PDF 报告</button>
       <a class="btn secondary" href="./index.html">返回测评页</a>
     </div>
 
@@ -487,6 +511,10 @@
       `当前阶段为「${phase}」，家庭类型为「${familyType}」。系统判断目前最值得优先关注的是时间安排、结构理解与长期准备节奏之间的配合。六个维度中，数值越高的部分越值得优先梳理。`;
 
     drawRadarSvg([timeIndex, prepIndex, cashIndex, protectIndex, taxIndex, aidIndex]);
+
+    function downloadPDF() {
+      window.print();
+    }
   </script>
 </body>
 </html>
