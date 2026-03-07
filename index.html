@@ -241,6 +241,13 @@
             color: #f8fbff;
         }
 
+        .chart-fallback {
+            display: none;
+            margin-top: 12px;
+            font-size: 13px;
+            color: #9fb6d8;
+        }
+
         .timeline {
             border-left: 2px solid rgba(96,165,250,0.28);
             margin-left: 8px;
@@ -431,6 +438,7 @@
                 <div class="chart-wrap">
                     <h3>结构雷达图</h3>
                     <canvas id="radarChart"></canvas>
+                    <div class="chart-fallback" id="chartFallback">图表加载中或暂不可用，但结果已经生成。</div>
                 </div>
             </div>
 
@@ -482,79 +490,82 @@
             document.getElementById(id).style.width = (value * 10) + "%";
         }
 
-function drawRadar(values) {
-  const ctx = document.getElementById("radarChart");
+        function drawRadar(values) {
+            const canvas = document.getElementById("radarChart");
+            const fallback = document.getElementById("chartFallback");
 
-  if (!ctx) return;
-  if (typeof Chart === "undefined") {
-    console.log("Chart.js 未加载，跳过雷达图");
-    return;
-  }
+            if (!canvas) return;
 
-  if (radarInstance) {
-    radarInstance.destroy();
-  }
-
-  radarInstance = new Chart(ctx, {
-    type: "radar",
-    data: {
-      labels: [
-        "时间紧迫",
-        "教育准备",
-        "现金流弹性",
-        "保障完整度",
-        "税务敏感",
-        "助学金敏感"
-      ],
-      datasets: [{
-        label: "当前家庭指数",
-        data: values,
-        fill: true,
-        backgroundColor: "rgba(59, 130, 246, 0.18)",
-        borderColor: "rgba(96, 165, 250, 1)",
-        pointBackgroundColor: "rgba(147, 197, 253, 1)",
-        pointBorderColor: "#fff",
-        pointHoverBackgroundColor: "#fff",
-        pointHoverBorderColor: "rgba(96, 165, 250, 1)"
-      }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: true,
-      scales: {
-        r: {
-          min: 0,
-          max: 10,
-          ticks: {
-            stepSize: 2,
-            color: "#9fb6d8",
-            backdropColor: "transparent"
-          },
-          angleLines: {
-            color: "rgba(148,163,184,0.2)"
-          },
-          grid: {
-            color: "rgba(148,163,184,0.2)"
-          },
-          pointLabels: {
-            color: "#dbeafe",
-            font: {
-              size: 12
+            if (typeof Chart === "undefined") {
+                fallback.style.display = "block";
+                return;
             }
-          }
-        }
-      },
-      plugins: {
-        legend: {
-          labels: {
-            color: "#dbeafe"
-          }
-        }
-      }
-    }
-  });
-}
 
+            fallback.style.display = "none";
+
+            if (radarInstance) {
+                radarInstance.destroy();
+            }
+
+            radarInstance = new Chart(canvas, {
+                type: "radar",
+                data: {
+                    labels: [
+                        "时间紧迫",
+                        "教育准备",
+                        "现金流弹性",
+                        "保障完整度",
+                        "税务敏感",
+                        "助学金敏感"
+                    ],
+                    datasets: [{
+                        label: "当前家庭指数",
+                        data: values,
+                        fill: true,
+                        backgroundColor: "rgba(59,130,246,0.18)",
+                        borderColor: "rgba(96,165,250,1)",
+                        pointBackgroundColor: "rgba(147,197,253,1)",
+                        pointBorderColor: "#fff",
+                        pointHoverBackgroundColor: "#fff",
+                        pointHoverBorderColor: "rgba(96,165,250,1)"
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    scales: {
+                        r: {
+                            min: 0,
+                            max: 10,
+                            ticks: {
+                                stepSize: 2,
+                                color: "#9fb6d8",
+                                backdropColor: "transparent"
+                            },
+                            angleLines: {
+                                color: "rgba(148,163,184,0.2)"
+                            },
+                            grid: {
+                                color: "rgba(148,163,184,0.2)"
+                            },
+                            pointLabels: {
+                                color: "#dbeafe",
+                                font: {
+                                    size: 12
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: "#dbeafe"
+                            }
+                        }
+                    }
+                }
+            });
+        }
 
         function calculateResult() {
             const age = Number(document.getElementById("age").value);
@@ -632,17 +643,6 @@ function drawRadar(values) {
             setBar("taxBar", taxIndex);
             setBar("aidBar", aidIndex);
 
-             document.getElementById("resultCard").classList.remove("hidden");
-                       
-            drawRadar([
-                timeIndex,
-                prepIndex,
-                cashIndex,
-                protectIndex,
-                taxIndex,
-                aidIndex
-            ]);
-
             document.getElementById("observation1").textContent =
                 `系统观察到当前家庭阶段为「${phase}」，其中最需要留意的部分是「${familyType.replace("家庭","")}」。`;
 
@@ -677,6 +677,18 @@ function drawRadar(values) {
             document.getElementById("adviceList").innerHTML =
                 advice.slice(0, 4).map(item => `<li>${item}</li>`).join("");
 
+            document.getElementById("resultCard").classList.remove("hidden");
+
+            setTimeout(() => {
+                drawRadar([
+                    timeIndex,
+                    prepIndex,
+                    cashIndex,
+                    protectIndex,
+                    taxIndex,
+                    aidIndex
+                ]);
+            }, 100);
 
             document.getElementById("resultCard").scrollIntoView({ behavior: "smooth" });
         }
