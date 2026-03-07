@@ -4,8 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>家庭教育资金体检</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         * { box-sizing: border-box; }
+
         body {
             margin: 0;
             font-family: "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
@@ -13,10 +15,12 @@
             color: #e5eefc;
             padding: 24px 16px 48px;
         }
+
         .container {
-            max-width: 760px;
+            max-width: 860px;
             margin: 0 auto;
         }
+
         .hero {
             background: linear-gradient(135deg, #13213a 0%, #0f172a 100%);
             border: 1px solid rgba(148, 163, 184, 0.18);
@@ -25,24 +29,28 @@
             box-shadow: 0 20px 60px rgba(0,0,0,0.35);
             margin-bottom: 20px;
         }
+
         .eyebrow {
             color: #93c5fd;
             font-size: 13px;
             letter-spacing: 1px;
             margin-bottom: 10px;
         }
+
         h1 {
             margin: 0 0 10px;
             font-size: 34px;
             line-height: 1.2;
             color: #f8fbff;
         }
+
         .subtitle {
             margin: 0;
             color: #c7d7f2;
             font-size: 16px;
             line-height: 1.7;
         }
+
         .card {
             background: rgba(15, 23, 42, 0.92);
             border: 1px solid rgba(148, 163, 184, 0.18);
@@ -51,20 +59,24 @@
             margin-bottom: 18px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
         }
+
         .card h2 {
             margin: 0 0 8px;
             font-size: 22px;
             color: #f8fbff;
         }
+
         .card p.desc {
             margin: 0 0 18px;
             color: #b9c9e6;
             line-height: 1.7;
             font-size: 14px;
         }
+
         .question {
             margin-bottom: 18px;
         }
+
         .question label {
             display: block;
             margin-bottom: 8px;
@@ -72,6 +84,7 @@
             font-weight: 600;
             color: #eaf2ff;
         }
+
         select {
             width: 100%;
             padding: 13px 14px;
@@ -82,10 +95,12 @@
             font-size: 15px;
             outline: none;
         }
+
         select:focus {
             border-color: #60a5fa;
             box-shadow: 0 0 0 3px rgba(96,165,250,0.15);
         }
+
         .btn {
             width: 100%;
             padding: 15px 18px;
@@ -98,12 +113,15 @@
             cursor: pointer;
             margin-top: 8px;
         }
+
         .btn:hover {
             opacity: 0.96;
         }
+
         .hidden {
             display: none;
         }
+
         .result-header {
             display: flex;
             flex-wrap: wrap;
@@ -112,6 +130,7 @@
             align-items: center;
             margin-bottom: 18px;
         }
+
         .badge {
             display: inline-block;
             padding: 8px 12px;
@@ -121,33 +140,39 @@
             font-size: 13px;
             border: 1px solid rgba(96,165,250,0.25);
         }
+
         .score-box {
-            min-width: 180px;
+            min-width: 200px;
             text-align: center;
             background: linear-gradient(135deg, rgba(37,99,235,0.18), rgba(14,165,233,0.12));
             border: 1px solid rgba(96,165,250,0.18);
             border-radius: 18px;
             padding: 16px;
         }
+
         .score-num {
             font-size: 40px;
             font-weight: 800;
             color: #f8fbff;
             line-height: 1;
         }
+
         .score-label {
             margin-top: 8px;
             color: #bfdbfe;
             font-size: 14px;
         }
+
         .section-title {
             font-size: 18px;
             margin: 24px 0 14px;
             color: #f8fbff;
         }
+
         .metric {
             margin-bottom: 14px;
         }
+
         .metric-top {
             display: flex;
             justify-content: space-between;
@@ -155,54 +180,78 @@
             margin-bottom: 6px;
             color: #d8e7ff;
         }
+
         .bar {
             height: 10px;
             background: #1e293b;
             border-radius: 999px;
             overflow: hidden;
         }
+
         .fill {
             height: 100%;
             border-radius: 999px;
             background: linear-gradient(90deg, #38bdf8 0%, #2563eb 100%);
         }
+
         .grid {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 18px;
+            align-items: start;
+        }
+
+        .mini-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 14px;
         }
+
         .mini-card {
             background: rgba(15, 23, 42, 0.75);
             border: 1px solid rgba(148,163,184,0.14);
             border-radius: 16px;
             padding: 16px;
         }
+
         .mini-card h3 {
             margin: 0 0 8px;
             font-size: 15px;
             color: #f8fbff;
         }
+
         .mini-card p {
             margin: 0;
             color: #c7d7f2;
             line-height: 1.7;
             font-size: 14px;
         }
-        ul {
-            margin: 10px 0 0 18px;
-            padding: 0;
-            color: #d7e5fb;
-            line-height: 1.8;
+
+        .chart-wrap {
+            background: rgba(15, 23, 42, 0.75);
+            border: 1px solid rgba(148,163,184,0.14);
+            border-radius: 18px;
+            padding: 18px;
+            min-height: 380px;
         }
+
+        .chart-wrap h3 {
+            margin: 0 0 12px;
+            font-size: 16px;
+            color: #f8fbff;
+        }
+
         .timeline {
             border-left: 2px solid rgba(96,165,250,0.28);
             margin-left: 8px;
             padding-left: 18px;
         }
+
         .step {
             margin-bottom: 16px;
             position: relative;
         }
+
         .step::before {
             content: "";
             position: absolute;
@@ -214,27 +263,39 @@
             background: #60a5fa;
             box-shadow: 0 0 0 4px rgba(96,165,250,0.12);
         }
+
         .step-title {
             font-weight: 700;
             color: #f8fbff;
             margin-bottom: 4px;
         }
+
         .step-desc {
             color: #bfd0ea;
             font-size: 14px;
             line-height: 1.7;
         }
+
+        ul {
+            margin: 10px 0 0 18px;
+            padding: 0;
+            color: #d7e5fb;
+            line-height: 1.8;
+        }
+
         .footer-note {
             margin-top: 16px;
             font-size: 12px;
             line-height: 1.7;
             color: #8ea3c7;
         }
-        @media (max-width: 640px) {
+
+        @media (max-width: 760px) {
             h1 { font-size: 28px; }
-            .grid { grid-template-columns: 1fr; }
+            .grid, .mini-grid { grid-template-columns: 1fr; }
             .result-header { flex-direction: column; align-items: stretch; }
             .score-box { width: 100%; }
+            .chart-wrap { min-height: auto; }
         }
     </style>
 </head>
@@ -245,13 +306,13 @@
             <h1>家庭教育资金体检</h1>
             <p class="subtitle">
                 用 3 分钟了解家庭目前所处阶段、时间紧迫度、账户结构复杂度、
-                税务敏感度与助学金敏感度，获得一份可读性更强的结构观察结果。
+                税务敏感度与助学金敏感度，获得一份更直观的结构观察结果。
             </p>
         </div>
 
         <div class="card" id="formCard">
             <h2>开始测评</h2>
-            <p class="desc">这是一份演示版测评，重点展示结果结构与产品方向。完成后会自动生成一页体检结果。</p>
+            <p class="desc">这是演示版测评，重点展示结果结构与产品方向。完成后会自动生成一页体检结果。</p>
 
             <div class="question">
                 <label for="age">1. 孩子的年龄阶段</label>
@@ -332,40 +393,49 @@
                 </div>
             </div>
 
-            <div class="section-title">六大结构指数</div>
+            <div class="grid">
+                <div>
+                    <div class="section-title">六大结构指数</div>
 
-            <div class="metric">
-                <div class="metric-top"><span>时间紧迫指数</span><span id="timeValue">0</span></div>
-                <div class="bar"><div class="fill" id="timeBar" style="width:0%"></div></div>
-            </div>
+                    <div class="metric">
+                        <div class="metric-top"><span>时间紧迫指数</span><span id="timeValue">0</span></div>
+                        <div class="bar"><div class="fill" id="timeBar" style="width:0%"></div></div>
+                    </div>
 
-            <div class="metric">
-                <div class="metric-top"><span>教育资金准备度指数</span><span id="prepValue">0</span></div>
-                <div class="bar"><div class="fill" id="prepBar" style="width:0%"></div></div>
-            </div>
+                    <div class="metric">
+                        <div class="metric-top"><span>教育资金准备度指数</span><span id="prepValue">0</span></div>
+                        <div class="bar"><div class="fill" id="prepBar" style="width:0%"></div></div>
+                    </div>
 
-            <div class="metric">
-                <div class="metric-top"><span>现金流弹性指数</span><span id="cashValue">0</span></div>
-                <div class="bar"><div class="fill" id="cashBar" style="width:0%"></div></div>
-            </div>
+                    <div class="metric">
+                        <div class="metric-top"><span>现金流弹性指数</span><span id="cashValue">0</span></div>
+                        <div class="bar"><div class="fill" id="cashBar" style="width:0%"></div></div>
+                    </div>
 
-            <div class="metric">
-                <div class="metric-top"><span>保障完整度指数</span><span id="protectValue">0</span></div>
-                <div class="bar"><div class="fill" id="protectBar" style="width:0%"></div></div>
-            </div>
+                    <div class="metric">
+                        <div class="metric-top"><span>保障完整度指数</span><span id="protectValue">0</span></div>
+                        <div class="bar"><div class="fill" id="protectBar" style="width:0%"></div></div>
+                    </div>
 
-            <div class="metric">
-                <div class="metric-top"><span>税务敏感指数</span><span id="taxValue">0</span></div>
-                <div class="bar"><div class="fill" id="taxBar" style="width:0%"></div></div>
-            </div>
+                    <div class="metric">
+                        <div class="metric-top"><span>税务敏感指数</span><span id="taxValue">0</span></div>
+                        <div class="bar"><div class="fill" id="taxBar" style="width:0%"></div></div>
+                    </div>
 
-            <div class="metric">
-                <div class="metric-top"><span>助学金敏感指数</span><span id="aidValue">0</span></div>
-                <div class="bar"><div class="fill" id="aidBar" style="width:0%"></div></div>
+                    <div class="metric">
+                        <div class="metric-top"><span>助学金敏感指数</span><span id="aidValue">0</span></div>
+                        <div class="bar"><div class="fill" id="aidBar" style="width:0%"></div></div>
+                    </div>
+                </div>
+
+                <div class="chart-wrap">
+                    <h3>结构雷达图</h3>
+                    <canvas id="radarChart"></canvas>
+                </div>
             </div>
 
             <div class="section-title">系统观察</div>
-            <div class="grid">
+            <div class="mini-grid">
                 <div class="mini-card">
                     <h3>当前特点</h3>
                     <p id="observation1"></p>
@@ -402,12 +472,81 @@
     </div>
 
     <script>
+        let radarInstance = null;
+
         function clamp10(x) {
             return Math.max(0, Math.min(10, x));
         }
 
         function setBar(id, value) {
             document.getElementById(id).style.width = (value * 10) + "%";
+        }
+
+        function drawRadar(values) {
+            const ctx = document.getElementById("radarChart");
+
+            if (radarInstance) {
+                radarInstance.destroy();
+            }
+
+            radarInstance = new Chart(ctx, {
+                type: "radar",
+                data: {
+                    labels: [
+                        "时间紧迫",
+                        "教育准备",
+                        "现金流弹性",
+                        "保障完整度",
+                        "税务敏感",
+                        "助学金敏感"
+                    ],
+                    datasets: [{
+                        label: "当前家庭指数",
+                        data: values,
+                        fill: true,
+                        backgroundColor: "rgba(59, 130, 246, 0.18)",
+                        borderColor: "rgba(96, 165, 250, 1)",
+                        pointBackgroundColor: "rgba(147, 197, 253, 1)",
+                        pointBorderColor: "#fff",
+                        pointHoverBackgroundColor: "#fff",
+                        pointHoverBorderColor: "rgba(96, 165, 250, 1)"
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    scales: {
+                        r: {
+                            min: 0,
+                            max: 10,
+                            ticks: {
+                                stepSize: 2,
+                                color: "#9fb6d8",
+                                backdropColor: "transparent"
+                            },
+                            angleLines: {
+                                color: "rgba(148,163,184,0.2)"
+                            },
+                            grid: {
+                                color: "rgba(148,163,184,0.2)"
+                            },
+                            pointLabels: {
+                                color: "#dbeafe",
+                                font: {
+                                    size: 12
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: "#dbeafe"
+                            }
+                        }
+                    }
+                }
+            });
         }
 
         function calculateResult() {
@@ -485,6 +624,15 @@
             setBar("protectBar", protectIndex);
             setBar("taxBar", taxIndex);
             setBar("aidBar", aidIndex);
+
+            drawRadar([
+                timeIndex,
+                prepIndex,
+                cashIndex,
+                protectIndex,
+                taxIndex,
+                aidIndex
+            ]);
 
             document.getElementById("observation1").textContent =
                 `系统观察到当前家庭阶段为「${phase}」，其中最需要留意的部分是「${familyType.replace("家庭","")}」。`;
