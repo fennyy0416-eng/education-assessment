@@ -482,72 +482,79 @@
             document.getElementById(id).style.width = (value * 10) + "%";
         }
 
-        function drawRadar(values) {
-            const ctx = document.getElementById("radarChart");
+function drawRadar(values) {
+  const ctx = document.getElementById("radarChart");
 
-            if (radarInstance) {
-                radarInstance.destroy();
+  if (!ctx) return;
+  if (typeof Chart === "undefined") {
+    console.log("Chart.js 未加载，跳过雷达图");
+    return;
+  }
+
+  if (radarInstance) {
+    radarInstance.destroy();
+  }
+
+  radarInstance = new Chart(ctx, {
+    type: "radar",
+    data: {
+      labels: [
+        "时间紧迫",
+        "教育准备",
+        "现金流弹性",
+        "保障完整度",
+        "税务敏感",
+        "助学金敏感"
+      ],
+      datasets: [{
+        label: "当前家庭指数",
+        data: values,
+        fill: true,
+        backgroundColor: "rgba(59, 130, 246, 0.18)",
+        borderColor: "rgba(96, 165, 250, 1)",
+        pointBackgroundColor: "rgba(147, 197, 253, 1)",
+        pointBorderColor: "#fff",
+        pointHoverBackgroundColor: "#fff",
+        pointHoverBorderColor: "rgba(96, 165, 250, 1)"
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: true,
+      scales: {
+        r: {
+          min: 0,
+          max: 10,
+          ticks: {
+            stepSize: 2,
+            color: "#9fb6d8",
+            backdropColor: "transparent"
+          },
+          angleLines: {
+            color: "rgba(148,163,184,0.2)"
+          },
+          grid: {
+            color: "rgba(148,163,184,0.2)"
+          },
+          pointLabels: {
+            color: "#dbeafe",
+            font: {
+              size: 12
             }
-
-            radarInstance = new Chart(ctx, {
-                type: "radar",
-                data: {
-                    labels: [
-                        "时间紧迫",
-                        "教育准备",
-                        "现金流弹性",
-                        "保障完整度",
-                        "税务敏感",
-                        "助学金敏感"
-                    ],
-                    datasets: [{
-                        label: "当前家庭指数",
-                        data: values,
-                        fill: true,
-                        backgroundColor: "rgba(59, 130, 246, 0.18)",
-                        borderColor: "rgba(96, 165, 250, 1)",
-                        pointBackgroundColor: "rgba(147, 197, 253, 1)",
-                        pointBorderColor: "#fff",
-                        pointHoverBackgroundColor: "#fff",
-                        pointHoverBorderColor: "rgba(96, 165, 250, 1)"
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: true,
-                    scales: {
-                        r: {
-                            min: 0,
-                            max: 10,
-                            ticks: {
-                                stepSize: 2,
-                                color: "#9fb6d8",
-                                backdropColor: "transparent"
-                            },
-                            angleLines: {
-                                color: "rgba(148,163,184,0.2)"
-                            },
-                            grid: {
-                                color: "rgba(148,163,184,0.2)"
-                            },
-                            pointLabels: {
-                                color: "#dbeafe",
-                                font: {
-                                    size: 12
-                                }
-                            }
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            labels: {
-                                color: "#dbeafe"
-                            }
-                        }
-                    }
-                }
-            });
+          }
         }
+      },
+      plugins: {
+        legend: {
+          labels: {
+            color: "#dbeafe"
+          }
+        }
+      }
+    }
+  });
+}
+
 
         function calculateResult() {
             const age = Number(document.getElementById("age").value);
@@ -625,6 +632,8 @@
             setBar("taxBar", taxIndex);
             setBar("aidBar", aidIndex);
 
+             document.getElementById("resultCard").classList.remove("hidden");
+                       
             drawRadar([
                 timeIndex,
                 prepIndex,
@@ -668,7 +677,7 @@
             document.getElementById("adviceList").innerHTML =
                 advice.slice(0, 4).map(item => `<li>${item}</li>`).join("");
 
-            document.getElementById("resultCard").classList.remove("hidden");
+
             document.getElementById("resultCard").scrollIntoView({ behavior: "smooth" });
         }
     </script>
