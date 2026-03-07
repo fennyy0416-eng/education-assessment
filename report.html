@@ -207,49 +207,52 @@
         </div>
     </div>
 
-    <script>
-        const score = localStorage.getItem("edu_score") || "78";
-        const phase = localStorage.getItem("edu_phase") || "规划建立期";
-        const familyType = localStorage.getItem("edu_type") || "规划准备型家庭";
-        const summary = localStorage.getItem("edu_summary") || "当前仍处于可以逐步建立教育资金准备框架的阶段，时间相对可控，适合尽早形成长期习惯。";
+<script>
+  var score = localStorage.getItem("edu_score") || "78";
+  var phase = localStorage.getItem("edu_phase") || "规划建立期";
+  var familyType = localStorage.getItem("edu_type") || "规划准备型家庭";
+  var summary = localStorage.getItem("edu_summary") || "当前仍处于可以逐步建立教育资金准备框架的阶段，时间相对可控，适合尽早形成长期习惯。";
 
-        const timeIndex = localStorage.getItem("edu_timeIndex") || "0";
-        const prepIndex = localStorage.getItem("edu_prepIndex") || "0";
-        const cashIndex = localStorage.getItem("edu_cashIndex") || "0";
-        const protectIndex = localStorage.getItem("edu_protectIndex") || "0";
-        const taxIndex = localStorage.getItem("edu_taxIndex") || "0";
-        const aidIndex = localStorage.getItem("edu_aidIndex") || "0";
+  var timeIndex = localStorage.getItem("edu_timeIndex") || "0";
+  var prepIndex = localStorage.getItem("edu_prepIndex") || "0";
+  var cashIndex = localStorage.getItem("edu_cashIndex") || "0";
+  var protectIndex = localStorage.getItem("edu_protectIndex") || "0";
+  var taxIndex = localStorage.getItem("edu_taxIndex") || "0";
+  var aidIndex = localStorage.getItem("edu_aidIndex") || "0";
 
-        document.getElementById("score").innerText = score;
-        document.getElementById("phase").innerText = phase;
-        document.getElementById("familyType").innerText = familyType;
-        document.getElementById("summary").innerText = summary;
+  document.getElementById("score").innerText = score;
+  document.getElementById("phase").innerText = phase;
+  document.getElementById("familyType").innerText = familyType;
+  document.getElementById("summary").innerText = summary;
 
-        document.getElementById("timeIndex").innerText = timeIndex;
-        document.getElementById("prepIndex").innerText = prepIndex;
-        document.getElementById("cashIndex").innerText = cashIndex;
-        document.getElementById("protectIndex").innerText = protectIndex;
-        document.getElementById("taxIndex").innerText = taxIndex;
-        document.getElementById("aidIndex").innerText = aidIndex;
+  document.getElementById("timeIndex").innerText = timeIndex;
+  document.getElementById("prepIndex").innerText = prepIndex;
+  document.getElementById("cashIndex").innerText = cashIndex;
+  document.getElementById("protectIndex").innerText = protectIndex;
+  document.getElementById("taxIndex").innerText = taxIndex;
+  document.getElementById("aidIndex").innerText = aidIndex;
 
-        let advice = [];
-        if (Number(timeIndex) >= 7) advice.push("优先确认时间窗口，避免把所有准备集中到后期。");
-        if (Number(aidIndex) >= 6) advice.push("尽早了解不同账户在表格中的填写方式与归类差异。");
-        if (Number(taxIndex) >= 6) advice.push("对收入来源与海外相关信息做一次提前梳理。");
-        if (Number(cashIndex) >= 6) advice.push("先建立更稳定的教育资金储蓄节奏，再考虑后续安排。");
-        if (Number(protectIndex) >= 5) advice.push("同步检查长期保障与教育准备是否平衡。");
+  var advice = [];
+  if (Number(timeIndex) >= 7) advice.push("优先确认时间窗口，避免把所有准备集中到后期。");
+  if (Number(aidIndex) >= 6) advice.push("尽早了解不同账户在表格中的填写方式与归类差异。");
+  if (Number(taxIndex) >= 6) advice.push("对收入来源与海外相关信息做一次提前梳理。");
+  if (Number(cashIndex) >= 6) advice.push("先建立更稳定的教育资金储蓄节奏，再考虑后续安排。");
+  if (Number(protectIndex) >= 5) advice.push("同步检查长期保障与教育准备是否平衡。");
 
-        if (advice.length === 0) {
-            advice = [
-                "持续记录家庭教育资金准备进度。",
-                "逐步建立长期教育资金思路。",
-                "后续可生成更完整的结构分析报告。"
-            ];
-        }
+  if (advice.length === 0) {
+    advice = [
+      "持续记录家庭教育资金准备进度。",
+      "逐步建立长期教育资金思路。",
+      "后续可生成更完整的结构分析报告。"
+    ];
+  }
 
-        document.getElementById("adviceList").innerHTML = advice.map(item => `<li>${item}</li>`).join("");
-        document.getElementById("observation").innerText =
-            `当前阶段为「${phase}」，家庭类型为「${familyType}」。系统判断目前最值得优先关注的是时间安排、结构理解与长期准备节奏之间的配合。`;
-    </script>
+  document.getElementById("adviceList").innerHTML = advice.map(function(item) {
+    return "<li>" + item + "</li>";
+  }).join("");
+
+  document.getElementById("observation").innerText =
+    "当前阶段为「" + phase + "」，家庭类型为「" + familyType + "」。系统判断目前最值得优先关注的是时间安排、结构理解与长期准备节奏之间的配合。";
+</script>
 </body>
 </html>
