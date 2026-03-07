@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>家庭教育资金结构测评</title>
+
+<style>
+
+body{
+font-family: Arial;
+background:#f5f7fb;
+text-align:center;
+padding:40px;
+}
+
+.container{
+background:white;
+padding:30px;
+border-radius:10px;
+max-width:600px;
+margin:auto;
+box-shadow:0 5px 15px rgba(0,0,0,0.1);
+}
+
+button{
+padding:12px 20px;
+margin-top:20px;
+border:none;
+background:#2c7be5;
+color:white;
+border-radius:6px;
+font-size:16px;
+cursor:pointer;
+}
+
+button:hover{
+background:#1e5bb8;
+}
+
+select{
+padding:10px;
+width:80%;
+margin-top:10px;
+border:1px solid #ddd;
+border-radius:4px;
+}
+
+.result{
+margin-top:30px;
+text-align:left;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>家庭教育资金结构测评</h2>
+
+<p>3分钟了解家庭教育资金准备阶段</p>
+
+<div id="quiz">
+
+<p>1. 孩子的年龄</p>
+
+<select id="age">
+<option value="2">0-5岁</option>
+<option value="4">6-10岁</option>
+<option value="7">11-14岁</option>
+<option value="10">15-18岁</option>
+</select>
+
+<p>2. 是否开始准备教育资金</p>
+
+<select id="prepare">
+<option value="2">已有专项教育资金</option>
+<option value="5">有储蓄但没有规划</option>
+<option value="8">尚未开始准备</option>
+</select>
+
+<p>3. 是否有孩子名下资产</p>
+
+<select id="childAsset">
+<option value="1">没有</option>
+<option value="9">有</option>
+</select>
+
+<p>4. 每月可储蓄金额</p>
+
+<select id="saving">
+<option value="9">500以下</option>
+<option value="6">500-2000</option>
+<option value="3">2000-5000</option>
+<option value="1">5000以上</option>
+</select>
+
+<p>5. 是否有长期寿险保障</p>
+
+<select id="insurance">
+<option value="2">有</option>
+<option value="8">没有</option>
+</select>
+
+<button onclick="calculate()">查看结果</button>
+
+</div>
+
+<div id="result" class="result"></div>
+
+</div>
+
+<script>
+
+function calculate(){
+
+let age = Number(document.getElementById("age").value);
+let prepare = Number(document.getElementById("prepare").value);
+let childAsset = Number(document.getElementById("childAsset").value);
+let saving = Number(document.getElementById("saving").value);
+let insurance = Number(document.getElementById("insurance").value);
+
+let timeIndex = age*0.7 + prepare*0.3;
+let structureIndex = childAsset;
+let cashIndex = saving;
+let protectionIndex = insurance;
+
+let total = 100 - (timeIndex + structureIndex + cashIndex + protectionIndex)*2;
+
+let type = "";
+
+if(timeIndex>7){
+type="时间窗口型家庭";
+}
+else if(structureIndex>6){
+type="结构复杂型家庭";
+}
+else{
+type="规划准备型家庭";
+}
+
+document.getElementById("result").innerHTML = `
+
+<h3>测评结果</h3>
+
+<p><b>家庭类型：</b>${type}</p>
+
+<p><b>教育资金准备度：</b>${Math.round(total)} / 100</p>
+
+<h4>结构指数</h4>
+
+<p>时间紧迫指数：${timeIndex.toFixed(1)}</p>
+<p>结构复杂指数：${structureIndex}</p>
+<p>现金流弹性指数：${cashIndex}</p>
+<p>保障完整度：${protectionIndex}</p>
+
+<h4>系统观察</h4>
+
+<p>系统根据当前信息判断，家庭教育资金仍有优化空间，建议提前关注资金安排节奏，并逐步建立长期教育准备计划。</p>
+
+`;
+
+}
+
+</script>
+
+</body>
+</html>
