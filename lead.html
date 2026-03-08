@@ -191,18 +191,18 @@
             localStorage.setItem("lead_phone", phone);
             localStorage.setItem("clientName", name);
 
-            const payload = {
-                name: name,
-                contact: contact,
-                phone: phone
-            };
+           const payload = {
+             name: name,
+             contact: contact,
+             phone: phone,
+             source: "assessment"
+   };
 
             try {
                 await fetch(SCRIPT_URL, {
                     method: "POST",
-                    mode: "no-cors",
                     headers: {
-                        "Content-Type": "text/plain;charset=utf-8"
+                        "Content-Type": "application/json"
                     },
                     body: JSON.stringify(payload)
                 });
