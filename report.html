@@ -4,86 +4,131 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>家庭教育资金结构分析报告</title>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
   <style>
     * {
       box-sizing: border-box;
+    }
+
+    :root {
+      --bg: #eef4fb;
+      --card: #ffffff;
+      --muted: #64748b;
+      --text: #0f172a;
+      --line: #e2e8f0;
+      --blue: #2563eb;
+      --blue-soft: #dbeafe;
+      --panel: #f8fbff;
+      --shadow: 0 16px 40px rgba(15, 23, 42, 0.08);
     }
 
     body {
       margin: 0;
       padding: 40px 20px;
       font-family: Arial, "PingFang SC", "Microsoft YaHei", sans-serif;
-      background: #eef3f9;
-      color: #1f2937;
+      background:
+        radial-gradient(circle at top left, #f8fbff 0%, transparent 28%),
+        linear-gradient(180deg, #eef4fb 0%, #edf2f8 100%);
+      color: var(--text);
     }
 
     .report {
-      max-width: 980px;
+      max-width: 1020px;
       margin: 0 auto;
-      background: #ffffff;
-      border-radius: 22px;
-      padding: 40px;
-      box-shadow: 0 12px 36px rgba(15, 23, 42, 0.08);
+      background: rgba(255,255,255,0.98);
+      border-radius: 28px;
+      padding: 42px;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(255,255,255,0.8);
     }
 
     .topbar {
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
-      gap: 16px;
+      gap: 20px;
       flex-wrap: wrap;
       margin-bottom: 28px;
-      border-bottom: 1px solid #e5e7eb;
       padding-bottom: 20px;
+      border-bottom: 1px solid var(--line);
     }
 
     .brand {
-      font-size: 13px;
-      letter-spacing: 1px;
-      color: #2563eb;
-      font-weight: 700;
-      margin-bottom: 10px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      letter-spacing: 1.2px;
+      color: var(--blue);
+      font-weight: 800;
+      margin-bottom: 12px;
       text-transform: uppercase;
+      background: #eff6ff;
+      border: 1px solid #dbeafe;
+      padding: 7px 12px;
+      border-radius: 999px;
     }
 
     h1 {
-      margin: 0 0 8px;
-      font-size: 32px;
-      color: #0f172a;
-      line-height: 1.2;
+      margin: 0 0 10px;
+      font-size: 34px;
+      color: var(--text);
+      line-height: 1.18;
+      letter-spacing: -0.5px;
     }
 
     .sub {
-      color: #64748b;
-      line-height: 1.7;
-      max-width: 620px;
+      color: var(--muted);
+      line-height: 1.8;
+      max-width: 650px;
       font-size: 14px;
     }
 
     .meta {
       text-align: right;
       min-width: 180px;
-      color: #64748b;
+      color: var(--muted);
       font-size: 13px;
-      line-height: 1.8;
+      line-height: 1.9;
+      background: #fafcff;
+      border: 1px solid var(--line);
+      padding: 14px 16px;
+      border-radius: 16px;
     }
 
     .score-box {
-      margin-top: 10px;
-      background: linear-gradient(135deg, #dbeafe, #eff6ff);
-      border: 1px solid #bfdbfe;
-      border-radius: 18px;
-      padding: 24px;
-      text-align: center;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 16px;
       margin-bottom: 28px;
     }
 
+    .score-main {
+      background: linear-gradient(135deg, #e0ecff 0%, #f4f8ff 100%);
+      border: 1px solid #cfe0ff;
+      border-radius: 24px;
+      padding: 28px;
+      min-height: 180px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .score-kicker {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+
     .score {
-      font-size: 56px;
+      font-size: 68px;
       font-weight: 800;
-      color: #2563eb;
+      color: var(--blue);
       line-height: 1;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
+      letter-spacing: -2px;
     }
 
     .score-label {
@@ -91,30 +136,32 @@
       color: #334155;
     }
 
-    .summary-grid {
+    .score-side {
       display: grid;
-      grid-template-columns: 1fr 1fr;
       gap: 14px;
-      margin-bottom: 28px;
     }
 
     .summary-card {
-      background: #f8fafc;
-      border: 1px solid #e2e8f0;
-      border-radius: 14px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 18px;
       padding: 18px;
+      box-shadow: 0 8px 20px rgba(15,23,42,0.03);
     }
 
     .summary-title {
-      font-size: 13px;
-      color: #64748b;
+      font-size: 12px;
+      color: var(--muted);
       margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
     }
 
     .summary-value {
       font-size: 22px;
       font-weight: 700;
-      color: #0f172a;
+      color: var(--text);
+      line-height: 1.35;
     }
 
     .section {
@@ -124,70 +171,97 @@
     .section h2 {
       font-size: 20px;
       margin: 0 0 14px;
-      color: #0f172a;
-      border-left: 4px solid #3b82f6;
-      padding-left: 10px;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section h2::before {
+      content: "";
+      width: 5px;
+      height: 22px;
+      border-radius: 999px;
+      background: linear-gradient(180deg, #3b82f6, #2563eb);
+      display: inline-block;
     }
 
     .card {
-      background: #f8fafc;
-      border: 1px solid #e2e8f0;
-      border-radius: 14px;
-      padding: 18px;
-      line-height: 1.8;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 20px;
+      line-height: 1.9;
       color: #334155;
     }
 
     .metrics {
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
-      gap: 12px;
+      gap: 14px;
     }
 
     .metric-box {
-      background: #f8fafc;
-      border: 1px solid #e2e8f0;
-      border-radius: 12px;
-      padding: 14px;
+      background: #fbfdff;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 16px;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .metric-box:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 24px rgba(15,23,42,0.06);
     }
 
     .metric-name {
       font-size: 13px;
-      color: #64748b;
-      margin-bottom: 8px;
+      color: var(--muted);
+      margin-bottom: 10px;
+      line-height: 1.5;
     }
 
     .metric-value {
-      font-size: 24px;
-      font-weight: 700;
-      color: #0f172a;
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--text);
+      line-height: 1;
+      margin-bottom: 8px;
     }
 
     .metric-note {
-      margin-top: 6px;
       font-size: 12px;
       color: #94a3b8;
+      line-height: 1.6;
     }
 
     .analysis-grid {
       display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
+      grid-template-columns: 1.05fr 0.95fr;
       gap: 18px;
-      align-items: start;
+      align-items: stretch;
     }
 
     .chart-card {
-      background: #f8fafc;
-      border: 1px solid #e2e8f0;
-      border-radius: 14px;
-      padding: 18px;
+      background: linear-gradient(180deg, #fbfdff 0%, #f6faff 100%);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 20px;
     }
 
     .chart-title {
       font-size: 15px;
       font-weight: 700;
-      color: #0f172a;
-      margin-bottom: 10px;
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+
+    .chart-sub {
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 10px;
+      line-height: 1.7;
+      text-align: center;
     }
 
     .radar-svg {
@@ -201,6 +275,7 @@
       fill: #334155;
       font-size: 12px;
       text-anchor: middle;
+      font-weight: 600;
     }
 
     .tick-text {
@@ -210,47 +285,52 @@
     }
 
     ul {
-      margin: 8px 0 0 20px;
+      margin: 6px 0 0 18px;
       padding: 0;
       color: #334155;
     }
 
     li {
-      margin-bottom: 8px;
-      line-height: 1.7;
+      margin-bottom: 10px;
+      line-height: 1.8;
+      padding-left: 2px;
     }
 
     .actions {
-      margin-top: 30px;
+      margin-top: 32px;
       display: flex;
       gap: 12px;
       flex-wrap: wrap;
     }
 
     .btn {
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
       padding: 14px 22px;
-      background: #2563eb;
+      background: linear-gradient(90deg, #2563eb 0%, #3b82f6 100%);
       color: white;
       text-decoration: none;
-      border-radius: 10px;
-      font-weight: 600;
+      border-radius: 12px;
+      font-weight: 700;
       border: none;
       cursor: pointer;
       font-size: 14px;
+      box-shadow: 0 10px 24px rgba(37,99,235,0.18);
     }
 
     .btn.secondary {
       background: #e2e8f0;
       color: #0f172a;
+      box-shadow: none;
     }
 
     .footer {
       margin-top: 32px;
       font-size: 12px;
-      line-height: 1.8;
-      color: #64748b;
-      border-top: 1px solid #e5e7eb;
+      line-height: 1.9;
+      color: var(--muted);
+      border-top: 1px solid var(--line);
       padding-top: 18px;
     }
 
@@ -263,7 +343,7 @@
         font-size: 28px;
       }
 
-      .summary-grid,
+      .score-box,
       .metrics,
       .analysis-grid {
         grid-template-columns: 1fr;
@@ -289,12 +369,13 @@
         margin: 0;
         max-width: 100%;
         border-radius: 0;
+        padding: 24px;
       }
     }
   </style>
 </head>
 <body>
-  <div class="report">
+  <div class="report" id="pdfContent">
     <div class="topbar">
       <div>
         <div class="brand">Education Structure Report</div>
@@ -306,23 +387,27 @@
       </div>
       <div class="meta">
         报告日期：<span id="reportDate"></span><br>
-        报告版本：Demo v1.2
+        报告版本：Demo v2.0
       </div>
     </div>
 
     <div class="score-box">
-      <div class="score" id="score">78</div>
-      <div class="score-label">教育资金准备度 / 100</div>
-    </div>
-
-    <div class="summary-grid">
-      <div class="summary-card">
-        <div class="summary-title">当前家庭阶段</div>
-        <div class="summary-value" id="phase">规划建立期</div>
+      <div class="score-main">
+        <div class="score-kicker">综合结果</div>
+        <div class="score" id="score">78</div>
+        <div class="score-label">教育资金准备度 / 100</div>
       </div>
-      <div class="summary-card">
-        <div class="summary-title">家庭类型判断</div>
-        <div class="summary-value" id="familyType">规划准备型家庭</div>
+
+      <div class="score-side">
+        <div class="summary-card">
+          <div class="summary-title">当前家庭阶段</div>
+          <div class="summary-value" id="phase">规划建立期</div>
+        </div>
+
+        <div class="summary-card">
+          <div class="summary-title">家庭类型判断</div>
+          <div class="summary-value" id="familyType">规划准备型家庭</div>
+        </div>
       </div>
     </div>
 
@@ -373,9 +458,11 @@
       <h2>结构图与系统观察</h2>
       <div class="analysis-grid">
         <div class="card" id="observation"></div>
+
         <div class="chart-card">
           <div class="chart-title">结构雷达图</div>
           <svg id="radarSvg" class="radar-svg" viewBox="0 0 360 360"></svg>
+          <div class="chart-sub">六个维度越靠外，表示该部分越值得优先关注。</div>
         </div>
       </div>
     </div>
@@ -513,7 +600,18 @@
     drawRadarSvg([timeIndex, prepIndex, cashIndex, protectIndex, taxIndex, aidIndex]);
 
     function downloadPDF() {
-      window.print();
+      const element = document.getElementById("pdfContent");
+
+      html2pdf()
+        .set({
+          margin: 0.4,
+          filename: "education_report.pdf",
+          image: { type: "jpeg", quality: 0.98 },
+          html2canvas: { scale: 2, useCORS: true },
+          jsPDF: { unit: "in", format: "letter", orientation: "portrait" }
+        })
+        .from(element)
+        .save();
     }
   </script>
 </body>
