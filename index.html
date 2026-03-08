@@ -1,211 +1,276 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>家庭教育资金体检</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, "PingFang SC", "Microsoft YaHei", sans-serif;
-      background: #0f172a;
-      color: #fff;
-      padding: 24px;
-    }
-    .wrap {
-      max-width: 720px;
-      margin: 0 auto;
-      background: #111827;
-      border-radius: 18px;
-      padding: 24px;
-    }
-    h1 {
-      margin-top: 0;
-      font-size: 30px;
-    }
-    p.desc {
-      color: #cbd5e1;
-      line-height: 1.7;
-    }
-    .q {
-      margin: 18px 0;
-    }
-    label {
-      display: block;
-      margin-bottom: 8px;
-      font-weight: 600;
-    }
-    select {
-      width: 100%;
-      padding: 12px;
-      border-radius: 10px;
-      border: 1px solid #334155;
-      background: #0b1325;
-      color: #fff;
-      font-size: 15px;
-    }
-    button {
-      width: 100%;
-      margin-top: 20px;
-      padding: 14px;
-      border: none;
-      border-radius: 12px;
-      background: #2563eb;
-      color: #fff;
-      font-size: 16px;
-      font-weight: 700;
-      cursor: pointer;
-    }
-    button:hover {
-      opacity: 0.95;
-    }
-    .note {
-      margin-top: 12px;
-      font-size: 12px;
-      color: #94a3b8;
-      line-height: 1.7;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>教育资金准备度测评</title>
+
+<style>
+
+body{
+font-family:Arial,"PingFang SC","Microsoft YaHei";
+background:#f4f7fb;
+margin:0;
+padding:40px 20px;
+}
+
+.container{
+max-width:780px;
+margin:auto;
+background:white;
+padding:40px;
+border-radius:20px;
+box-shadow:0 10px 30px rgba(0,0,0,0.08);
+}
+
+h1{
+margin-top:0;
+font-size:28px;
+}
+
+.desc{
+color:#64748b;
+margin-bottom:30px;
+line-height:1.7;
+}
+
+.question{
+margin-bottom:28px;
+}
+
+.question-title{
+font-weight:700;
+margin-bottom:10px;
+}
+
+.option{
+margin-bottom:8px;
+}
+
+button{
+margin-top:30px;
+padding:14px 22px;
+font-size:16px;
+background:#2563eb;
+color:white;
+border:none;
+border-radius:10px;
+cursor:pointer;
+}
+
+button:hover{
+background:#1d4ed8;
+}
+
+input[type=text]{
+width:100%;
+padding:12px;
+border:1px solid #e2e8f0;
+border-radius:8px;
+margin-top:6px;
+box-sizing:border-box;
+}
+
+</style>
 </head>
+
 <body>
-  <div class="wrap">
-    <h1>家庭教育资金体检</h1>
-    <p class="desc">用几道题快速生成一份演示版结构分析结果。</p>
 
-    <div class="q">
-      <label for="age">1. 孩子的年龄阶段</label>
-      <select id="age">
-        <option value="2">0–5岁</option>
-        <option value="4">6–10岁</option>
-        <option value="7">11–14岁</option>
-        <option value="10">15–18岁</option>
-      </select>
-    </div>
+<div class="container">
 
-    <div class="q">
-      <label for="prepare">2. 是否已经开始准备教育资金</label>
-      <select id="prepare">
-        <option value="2">已有专项教育资金</option>
-        <option value="5">有储蓄但没有专门安排</option>
-        <option value="8">尚未开始准备</option>
-      </select>
-    </div>
+<h1>家庭教育资金准备度测评</h1>
 
-    <div class="q">
-      <label for="childAsset">3. 是否有孩子名下资产</label>
-      <select id="childAsset">
-        <option value="1">没有</option>
-        <option value="9">有</option>
-      </select>
-    </div>
+<div class="desc">
+这个小测评主要是帮你快速看一下，现在大概准备到哪一步了。  
+没有标准答案，只是帮助你更清楚自己的情况。
+</div>
 
-    <div class="q">
-      <label for="saving">4. 家庭每月大约可储蓄金额</label>
-      <select id="saving">
-        <option value="9">500以下</option>
-        <option value="6">500–2000</option>
-        <option value="3">2000–5000</option>
-        <option value="1">5000以上</option>
-      </select>
-    </div>
+<div class="question">
+<div class="question-title">客户姓名</div>
+<input id="clientName" type="text" placeholder="请输入客户姓名">
+</div>
 
-    <div class="q">
-      <label for="insurance">5. 是否有长期寿险保障</label>
-      <select id="insurance">
-        <option value="2">有</option>
-        <option value="8">没有</option>
-      </select>
-    </div>
+<div class="question">
+<div class="question-title">1 孩子现在大概几年级</div>
 
-    <div class="q">
-      <label for="incomeType">6. 家庭主要收入类型</label>
-      <select id="incomeType">
-        <option value="2">W2收入为主</option>
-        <option value="5">自雇收入为主</option>
-        <option value="7">投资收入占比较高</option>
-        <option value="6">混合收入</option>
-      </select>
-    </div>
+<label class="option">
+<input type="radio" name="time" value="2"> 小学
+</label>
 
-    <div class="q">
-      <label for="overseas">7. 是否存在海外资产或海外收入</label>
-      <select id="overseas">
-        <option value="1">没有</option>
-        <option value="8">有</option>
-      </select>
-    </div>
+<label class="option">
+<input type="radio" name="time" value="5"> 初中
+</label>
 
-    <button type="button" onclick="goReport()">生成体检结果</button>
+<label class="option">
+<input type="radio" name="time" value="8"> 高中
+</label>
 
-    <div class="note">这是稳定简化版，先确保跳转和结果正常，再继续升级雷达图和 PDF。</div>
-  </div>
+<label class="option">
+<input type="radio" name="time" value="10"> 已经接近申请
+</label>
 
-  <script>
-    function clamp10(x) {
-      return Math.max(0, Math.min(10, x));
-    }
+</div>
 
-    function goReport() {
-      var age = Number(document.getElementById("age").value || 0);
-      var prepare = Number(document.getElementById("prepare").value || 0);
-      var childAsset = Number(document.getElementById("childAsset").value || 0);
-      var saving = Number(document.getElementById("saving").value || 0);
-      var insurance = Number(document.getElementById("insurance").value || 0);
-      var incomeType = Number(document.getElementById("incomeType").value || 0);
-      var overseas = Number(document.getElementById("overseas").value || 0);
+<div class="question">
+<div class="question-title">2 现在有没有专门准备教育资金</div>
 
-      var timeIndex = clamp10(age * 0.7 + prepare * 0.3);
-      var prepIndex = clamp10((10 - prepare) * 0.9);
-      var cashIndex = clamp10(saving * 0.6 + 2);
-      var protectIndex = clamp10((insurance + prepare) / 2);
-      var taxIndex = clamp10(incomeType * 0.6 + overseas * 0.4);
-      var aidIndex = clamp10(childAsset * 0.7 + prepare * 0.15 + overseas * 0.15);
+<label class="option">
+<input type="radio" name="prep" value="9"> 还没有准备
+</label>
 
-      var totalScore = 100 - (
-        timeIndex * 1.4 +
-        prepIndex * 1.1 +
-        cashIndex * 1.0 +
-        protectIndex * 1.1 +
-        taxIndex * 0.9 +
-        aidIndex * 1.1
-      );
-      totalScore = Math.max(28, Math.min(96, Math.round(totalScore)));
+<label class="option">
+<input type="radio" name="prep" value="6"> 有一点储蓄
+</label>
 
-      var phase = "";
-      if (age <= 4) {
-        phase = "长期准备期";
-      } else if (age <= 7) {
-        phase = "规划建立期";
-      } else {
-        phase = "时间窗口期";
-      }
+<label class="option">
+<input type="radio" name="prep" value="3"> 有专门账户
+</label>
 
-      var maxIndex = Math.max(timeIndex, cashIndex, protectIndex, taxIndex, aidIndex);
-      var familyType = "";
-      if (maxIndex === timeIndex) {
-        familyType = "时间窗口型家庭";
-      } else if (maxIndex === aidIndex) {
-        familyType = "助学金敏感型家庭";
-      } else if (maxIndex === taxIndex) {
-        familyType = "税务敏感型家庭";
-      } else if (maxIndex === cashIndex) {
-        familyType = "现金流平衡型家庭";
-      } else {
-        familyType = "规划准备型家庭";
-      }
+<label class="option">
+<input type="radio" name="prep" value="1"> 已经规划比较完整
+</label>
 
-      localStorage.setItem("edu_score", String(totalScore));
-      localStorage.setItem("edu_phase", phase);
-      localStorage.setItem("edu_type", familyType);
-      localStorage.setItem("edu_timeIndex", timeIndex.toFixed(1));
-      localStorage.setItem("edu_prepIndex", prepIndex.toFixed(1));
-      localStorage.setItem("edu_cashIndex", cashIndex.toFixed(1));
-      localStorage.setItem("edu_protectIndex", protectIndex.toFixed(1));
-      localStorage.setItem("edu_taxIndex", taxIndex.toFixed(1));
-      localStorage.setItem("edu_aidIndex", aidIndex.toFixed(1));
+</div>
 
-      window.location.href = "report.html";
-    }
-  </script>
+<div class="question">
+<div class="question-title">3 每月安排教育储蓄会不会有压力</div>
+
+<label class="option">
+<input type="radio" name="cash" value="8"> 压力比较大
+</label>
+
+<label class="option">
+<input type="radio" name="cash" value="6"> 有一点压力
+</label>
+
+<label class="option">
+<input type="radio" name="cash" value="4"> 可以安排
+</label>
+
+<label class="option">
+<input type="radio" name="cash" value="2"> 基本没有压力
+</label>
+
+</div>
+
+<div class="question">
+<div class="question-title">4 家庭保障是否比较完整</div>
+
+<label class="option">
+<input type="radio" name="protect" value="7"> 基本没有规划
+</label>
+
+<label class="option">
+<input type="radio" name="protect" value="5"> 有一点保障
+</label>
+
+<label class="option">
+<input type="radio" name="protect" value="3"> 大部分已经有
+</label>
+
+<label class="option">
+<input type="radio" name="protect" value="1"> 非常完整
+</label>
+
+</div>
+
+<div class="question">
+<div class="question-title">5 是否了解教育资金相关税务</div>
+
+<label class="option">
+<input type="radio" name="tax" value="8"> 完全不了解
+</label>
+
+<label class="option">
+<input type="radio" name="tax" value="6"> 听说过一点
+</label>
+
+<label class="option">
+<input type="radio" name="tax" value="4"> 有基本了解
+</label>
+
+<label class="option">
+<input type="radio" name="tax" value="2"> 比较清楚
+</label>
+
+</div>
+
+<div class="question">
+<div class="question-title">6 是否考虑过助学金影响</div>
+
+<label class="option">
+<input type="radio" name="aid" value="8"> 完全没想过
+</label>
+
+<label class="option">
+<input type="radio" name="aid" value="6"> 听说过
+</label>
+
+<label class="option">
+<input type="radio" name="aid" value="4"> 有一点了解
+</label>
+
+<label class="option">
+<input type="radio" name="aid" value="2"> 比较清楚
+</label>
+
+</div>
+
+<button onclick="generate()">生成报告</button>
+
+</div>
+
+<script>
+
+function val(name){
+let r=document.querySelector('input[name="'+name+'"]:checked');
+return r?parseFloat(r.value):0;
+}
+
+function generate(){
+
+let clientName=document.getElementById("clientName").value || "客户";
+
+let time=val("time");
+let prep=val("prep");
+let cash=val("cash");
+let protect=val("protect");
+let tax=val("tax");
+let aid=val("aid");
+
+let score=Math.round(
+100-
+(time+prep+cash+protect+tax+aid)*1.5
+);
+
+let phase="规划建立期";
+if(score>80) phase="准备较完整";
+if(score<50) phase="需要尽快规划";
+
+let type="规划准备型家庭";
+
+let summary="从这次结果看，现在还属于可以慢慢准备的阶段。越早开始规划，后面压力越小。";
+
+localStorage.setItem("clientName",clientName);
+
+localStorage.setItem("edu_score",score);
+localStorage.setItem("edu_phase",phase);
+localStorage.setItem("edu_type",type);
+localStorage.setItem("edu_summary",summary);
+
+localStorage.setItem("edu_timeIndex",time);
+localStorage.setItem("edu_prepIndex",prep);
+localStorage.setItem("edu_cashIndex",cash);
+localStorage.setItem("edu_protectIndex",protect);
+localStorage.setItem("edu_taxIndex",tax);
+localStorage.setItem("edu_aidIndex",aid);
+
+window.location.href="report.html";
+
+}
+
+</script>
+
 </body>
 </html>
