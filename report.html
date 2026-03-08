@@ -19,14 +19,13 @@
       --text: #0f172a;
       --line: #e2e8f0;
       --blue: #2563eb;
-      --blue-soft: #dbeafe;
       --panel: #f8fbff;
       --shadow: 0 16px 40px rgba(15, 23, 42, 0.08);
     }
 
     body {
       margin: 0;
-      padding: 40px 20px;
+      padding: 32px 16px;
       font-family: Arial, "PingFang SC", "Microsoft YaHei", sans-serif;
       background:
         radial-gradient(circle at top left, #f8fbff 0%, transparent 28%),
@@ -35,11 +34,11 @@
     }
 
     .report {
-      max-width: 1020px;
+      max-width: 820px;
       margin: 0 auto;
       background: rgba(255,255,255,0.98);
-      border-radius: 28px;
-      padding: 42px;
+      border-radius: 24px;
+      padding: 32px;
       box-shadow: var(--shadow);
       border: 1px solid rgba(255,255,255,0.8);
     }
@@ -48,10 +47,10 @@
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
-      gap: 20px;
+      gap: 18px;
       flex-wrap: wrap;
-      margin-bottom: 28px;
-      padding-bottom: 20px;
+      margin-bottom: 24px;
+      padding-bottom: 18px;
       border-bottom: 1px solid var(--line);
     }
 
@@ -73,22 +72,22 @@
 
     h1 {
       margin: 0 0 10px;
-      font-size: 34px;
+      font-size: 30px;
       color: var(--text);
       line-height: 1.18;
-      letter-spacing: -0.5px;
+      letter-spacing: -0.3px;
     }
 
     .sub {
       color: var(--muted);
       line-height: 1.8;
-      max-width: 650px;
+      max-width: 560px;
       font-size: 14px;
     }
 
     .meta {
       text-align: right;
-      min-width: 180px;
+      min-width: 170px;
       color: var(--muted);
       font-size: 13px;
       line-height: 1.9;
@@ -101,16 +100,16 @@
     .score-box {
       display: grid;
       grid-template-columns: 1.1fr 0.9fr;
-      gap: 16px;
-      margin-bottom: 28px;
+      gap: 14px;
+      margin-bottom: 24px;
     }
 
     .score-main {
       background: linear-gradient(135deg, #e0ecff 0%, #f4f8ff 100%);
       border: 1px solid #cfe0ff;
-      border-radius: 24px;
-      padding: 28px;
-      min-height: 180px;
+      border-radius: 22px;
+      padding: 24px;
+      min-height: 165px;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -123,7 +122,7 @@
     }
 
     .score {
-      font-size: 68px;
+      font-size: 60px;
       font-weight: 800;
       color: var(--blue);
       line-height: 1;
@@ -138,14 +137,14 @@
 
     .score-side {
       display: grid;
-      gap: 14px;
+      gap: 12px;
     }
 
     .summary-card {
       background: var(--card);
       border: 1px solid var(--line);
-      border-radius: 18px;
-      padding: 18px;
+      border-radius: 16px;
+      padding: 16px;
       box-shadow: 0 8px 20px rgba(15,23,42,0.03);
     }
 
@@ -158,19 +157,19 @@
     }
 
     .summary-value {
-      font-size: 22px;
+      font-size: 20px;
       font-weight: 700;
       color: var(--text);
       line-height: 1.35;
     }
 
     .section {
-      margin-top: 28px;
+      margin-top: 24px;
     }
 
     .section h2 {
-      font-size: 20px;
-      margin: 0 0 14px;
+      font-size: 19px;
+      margin: 0 0 12px;
       color: var(--text);
       display: flex;
       align-items: center;
@@ -180,7 +179,7 @@
     .section h2::before {
       content: "";
       width: 5px;
-      height: 22px;
+      height: 20px;
       border-radius: 999px;
       background: linear-gradient(180deg, #3b82f6, #2563eb);
       display: inline-block;
@@ -189,29 +188,23 @@
     .card {
       background: var(--panel);
       border: 1px solid var(--line);
-      border-radius: 18px;
-      padding: 20px;
-      line-height: 1.9;
+      border-radius: 16px;
+      padding: 18px;
+      line-height: 1.85;
       color: #334155;
     }
 
     .metrics {
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
-      gap: 14px;
+      gap: 12px;
     }
 
     .metric-box {
       background: #fbfdff;
       border: 1px solid var(--line);
-      border-radius: 16px;
-      padding: 16px;
-      transition: transform 0.15s ease, box-shadow 0.15s ease;
-    }
-
-    .metric-box:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 24px rgba(15,23,42,0.06);
+      border-radius: 14px;
+      padding: 14px;
     }
 
     .metric-name {
@@ -222,7 +215,7 @@
     }
 
     .metric-value {
-      font-size: 28px;
+      font-size: 26px;
       font-weight: 800;
       color: var(--text);
       line-height: 1;
@@ -238,15 +231,15 @@
     .analysis-grid {
       display: grid;
       grid-template-columns: 1.05fr 0.95fr;
-      gap: 18px;
+      gap: 16px;
       align-items: stretch;
     }
 
     .chart-card {
       background: linear-gradient(180deg, #fbfdff 0%, #f6faff 100%);
       border: 1px solid var(--line);
-      border-radius: 18px;
-      padding: 20px;
+      border-radius: 16px;
+      padding: 18px;
     }
 
     .chart-title {
@@ -266,14 +259,14 @@
 
     .radar-svg {
       width: 100%;
-      max-width: 360px;
+      max-width: 320px;
       display: block;
       margin: 0 auto;
     }
 
     .label-text {
       fill: #334155;
-      font-size: 12px;
+      font-size: 11px;
       text-anchor: middle;
       font-weight: 600;
     }
@@ -297,7 +290,7 @@
     }
 
     .actions {
-      margin-top: 32px;
+      margin-top: 28px;
       display: flex;
       gap: 12px;
       flex-wrap: wrap;
@@ -307,7 +300,7 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      padding: 14px 22px;
+      padding: 14px 20px;
       background: linear-gradient(90deg, #2563eb 0%, #3b82f6 100%);
       color: white;
       text-decoration: none;
@@ -326,21 +319,30 @@
     }
 
     .footer {
-      margin-top: 32px;
+      margin-top: 28px;
       font-size: 12px;
       line-height: 1.9;
       color: var(--muted);
       border-top: 1px solid var(--line);
-      padding-top: 18px;
+      padding-top: 16px;
+    }
+
+    .section,
+    .summary-card,
+    .metric-box,
+    .chart-card,
+    .card {
+      break-inside: avoid;
+      page-break-inside: avoid;
     }
 
     @media (max-width: 860px) {
       .report {
-        padding: 24px;
+        padding: 22px;
       }
 
       h1 {
-        font-size: 28px;
+        font-size: 26px;
       }
 
       .score-box,
@@ -369,7 +371,7 @@
         margin: 0;
         max-width: 100%;
         border-radius: 0;
-        padding: 24px;
+        padding: 18px;
       }
     }
   </style>
@@ -387,7 +389,7 @@
       </div>
       <div class="meta">
         报告日期：<span id="reportDate"></span><br>
-        报告版本：Demo v2.0
+        报告版本：Demo v2.1
       </div>
     </div>
 
@@ -602,16 +604,26 @@
     function downloadPDF() {
       const element = document.getElementById("pdfContent");
 
-      html2pdf()
-        .set({
-          margin: 0.4,
-          filename: "education_report.pdf",
-          image: { type: "jpeg", quality: 0.98 },
-          html2canvas: { scale: 2, useCORS: true },
-          jsPDF: { unit: "in", format: "letter", orientation: "portrait" }
-        })
-        .from(element)
-        .save();
+      const opt = {
+        margin: [0.35, 0.3, 0.35, 0.3],
+        filename: "education_report.pdf",
+        image: { type: "jpeg", quality: 0.98 },
+        html2canvas: {
+          scale: 1.6,
+          useCORS: true,
+          scrollY: 0
+        },
+        jsPDF: {
+          unit: "in",
+          format: "letter",
+          orientation: "portrait"
+        },
+        pagebreak: {
+          mode: ["css", "legacy"]
+        }
+      };
+
+      html2pdf().set(opt).from(element).save();
     }
   </script>
 </body>
