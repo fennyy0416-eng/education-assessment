@@ -40,7 +40,7 @@
       border-radius: 24px;
       padding: 32px;
       box-shadow: var(--shadow);
-      border: 1px solid rgba(255,255,255,0.8);
+      border: 1px solid rgba(255,255,255,0.85);
     }
 
     .topbar {
@@ -623,7 +623,9 @@
         }
       };
 
-      html2pdf().set(opt).from(element).save();
+      setTimeout(() => {
+        html2pdf().set(opt).from(element).save();
+      }, 400);
     }
   </script>
 </body>
