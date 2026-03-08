@@ -8,9 +8,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
   <style>
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     :root {
       --bg: #eef4fb;
@@ -355,25 +353,6 @@
         text-align: left;
       }
     }
-
-    @media print {
-      body {
-        background: white;
-        padding: 0;
-      }
-
-      .actions {
-        display: none;
-      }
-
-      .report {
-        box-shadow: none;
-        margin: 0;
-        max-width: 100%;
-        border-radius: 0;
-        padding: 18px;
-      }
-    }
   </style>
 </head>
 <body>
@@ -389,7 +368,7 @@
       </div>
       <div class="meta">
         报告日期：<span id="reportDate"></span><br>
-        报告版本：Demo v2.1
+        报告版本：Demo v2.2
       </div>
     </div>
 
@@ -476,7 +455,7 @@
       </div>
     </div>
 
-    <div class="actions">
+    <div class="actions" id="actionBar">
       <button class="btn" onclick="downloadPDF()">下载 PDF 报告</button>
       <a class="btn secondary" href="./index.html">返回测评页</a>
     </div>
@@ -603,6 +582,9 @@
 
     function downloadPDF() {
       const element = document.getElementById("pdfContent");
+      const actionBar = document.getElementById("actionBar");
+
+      actionBar.style.display = "none";
 
       const opt = {
         margin: [0.35, 0.3, 0.35, 0.3],
@@ -624,8 +606,10 @@
       };
 
       setTimeout(() => {
-        html2pdf().set(opt).from(element).save();
-      }, 400);
+        html2pdf().set(opt).from(element).save().then(() => {
+          actionBar.style.display = "flex";
+        });
+      }, 700);
     }
   </script>
 </body>
