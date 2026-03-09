@@ -19,15 +19,8 @@ body{
     border-radius:20px;
     box-shadow:0 10px 30px rgba(0,0,0,0.08);
 }
-h1{
-    margin-top:0;
-    font-size:28px;
-}
-.desc{
-    color:#64748b;
-    margin-bottom:30px;
-    line-height:1.7;
-}
+h1{ margin-top:0; font-size:28px; }
+.desc{ color:#64748b; margin-bottom:30px; line-height:1.7; }
 .desc .tag{
     display:inline-block;
     background:#eff6ff;
@@ -39,22 +32,10 @@ h1{
     font-weight:700;
     margin-bottom:10px;
 }
-.question{
-    margin-bottom:28px;
-}
-.question-title{
-    font-weight:700;
-    margin-bottom:10px;
-}
-.option{
-    display:block;
-    margin-bottom:8px;
-    cursor:pointer;
-    line-height:1.6;
-}
-.option input{
-    margin-right:8px;
-}
+.question{ margin-bottom:28px; }
+.question-title{ font-weight:700; margin-bottom:10px; }
+.option{ display:block; margin-bottom:8px; cursor:pointer; line-height:1.6; }
+.option input{ margin-right:8px; }
 button{
     margin-top:30px;
     padding:14px 22px;
@@ -66,9 +47,7 @@ button{
     cursor:pointer;
     font-weight:700;
 }
-button:hover{
-    background:#1d4ed8;
-}
+button:hover{ background:#1d4ed8; }
 input[type=text]{
     width:100%;
     padding:12px;
@@ -78,19 +57,13 @@ input[type=text]{
     box-sizing:border-box;
     font-size:15px;
 }
-.error-msg{
-    color:#dc2626;
-    font-size:13px;
-    margin-top:12px;
-    display:none;
-}
+.error-msg{ color:#dc2626; font-size:13px; margin-top:12px; display:none; }
 </style>
 </head>
 <body>
 <div class="container">
 
     <h1>家庭教育资金准备度测评</h1>
-
     <div class="desc">
         <span class="tag">专为计划申请美国大学的华人家庭设计</span><br>
         这个小测评帮你快速看清楚，现在大概准备到哪一步了。<br>
@@ -153,84 +126,89 @@ input[type=text]{
     </div>
 
     <div class="error-msg" id="errorMsg">请确认第 1、2、4、5、6 题都已选择，再继续。</div>
-
     <button onclick="generate()">继续 →</button>
 
 </div>
-
 <script>
 function val(name){
     const r = document.querySelector('input[name="'+name+'"]:checked');
     return r ? parseFloat(r.value) : null;
 }
-
 function getAccounts(){
-    return Array.from(document.querySelectorAll('input[name="accounts"]:checked'))
-                            .map(c => c.value);
+    return Array.from(document.querySelectorAll('input[name="accounts"]:checked')).map(c=>c.value);
 }
-
 function generate(){
     const clientName = document.getElementById("clientName").value.trim() || "客户";
-
     const time    = val("time");
     const prep    = val("prep");
     const protect = val("protect");
     const tax     = val("tax");
     const aid     = val("aid");
 
-    if(time === null || prep === null || protect === null || tax === null || aid === null){
-        document.getElementById("errorMsg").style.display = "block";
-        return;
-    }
-    document.getElementById("errorMsg").style.display = "none";
+if(time===null||prep===null||protect===null||tax===null||aid===null){
+document.getElementById("errorMsg").style.display="block";
+return;
+}
+document.getElementById("errorMsg").style.display="none";
 
-    const accounts = getAccounts();
+const accounts = getAccounts();
+const cash = (accounts.length===0||accounts.includes("none")) ? 8
+: accounts.length===1 ? 6
+: accounts.length===2 ? 4 : 2;
 
-    const cash = (accounts.length === 0 || accounts.includes("none")) ? 8
-                         : accounts.length === 1 ? 6
-                         : accounts.length === 2 ? 4
-                         : 2;
+let score = Math.round(100-(time+prep+cash+protect+tax+aid)*1.5);
+score = Math.max(10, Math.min(100, score));
 
-    let score = Math.round(100 - (time + prep + cash + protect + tax + aid) * 1.5);
-    score = Math.max(10, Math.min(100, score));
+let phase = "规划建立期";
+if(score>=80) phase="准备较完整";
+else if(score>=60) phase="规划建立期";
+else if(score>=40) phase="需要加快规划";
+else phase="需要尽快安排";
 
-    let phase = "规划建立期";
-    if      (score >= 80) phase = "准备较完整";
-    else if (score >= 60) phase = "规划建立期";
-    else if (score >= 40) phase = "需要加快规划";
-    else                  phase = "需要尽快安排";
+let type = "规划准备型家庭";
+if(accounts.includes("insurance")&&accounts.includes("retirement")) type="结构配置型家庭";
+else if(accounts.includes("child")) type="为孩子提前布局型家庭";
+else if(accounts.includes("foreign")) type="跨境资产型家庭";
+else if(accounts.length===0||accounts.includes("none")) type="规划起步型家庭";
 
-    let type = "规划准备型家庭";
-    if      (accounts.includes("insurance") && accounts.includes("retirement")) type = "结构配置型家庭";
-    else if (accounts.includes("child"))   type = "为孩子提前布局型家庭";
-    else if (accounts.includes("foreign")) type = "跨境资产型家庭";
-    else if (accounts.length === 0 || accounts.includes("none")) type = "规划起步型家庭";
+let summary = "";
+if(score>=80) summary="从测评结果看，你家目前在教育资金准备上已经有了比较好的基础。接下来更重要的是把各个账户的结构对一遍，确保在填写 FAFSA / CSS 时不会有意外。";
+else if(score>=60) summary="现在还处在可以从容布局的阶段，时间是你的优势。趁孩子还没到申请阶段，提前把账户类型和资产结构理清楚，后面填表时会轻松很多。";
+else if(score>=40) summary="时间已经开始紧了，建议尽快把家里的账户结构梳理一遍。不同账户在 FAFSA / CSS 里的处理方式不一样，提前了解能避免不必要的损失。";
+else summary="孩子快要到申请阶段了，现在是最需要行动的时间节点。账户结构、资产归类、FAFSA 填写规则这几块建议尽快找专业人士梳理一遍。";
 
-    let summary = "";
-    if(score >= 80){
-        summary = "从测评结果看，你家目前在教育资金准备上已经有了比较好的基础。接下来更重要的是把各个账户的结构对一遍，确保在填写 FAFSA / CSS 时不会有意外。";
-    } else if(score >= 60){
-        summary = "现在还处在可以从容布局的阶段，时间是你的优势。趁孩子还没到申请阶段，提前把账户类型和资产结构理清楚，后面填表时会轻松很多。";
-    } else if(score >= 40){
-        summary = "时间已经开始紧了，建议尽快把家里的账户结构梳理一遍。不同账户在 FAFSA / CSS 里的处理方式不一样，提前了解能避免不必要的损失。";
-    } else {
-        summary = "孩子快要到申请阶段了，现在是最需要行动的时间节点。账户结构、资产归类、FAFSA 填写规则这几块建议尽快找专业人士梳理一遍。";
-    }
+// Build URL params — pass everything via URL so report works in PDF/email
+const params = new URLSearchParams({
+name:    clientName,
+score:   score,
+phase:   phase,
+type:    type,
+summary: summary,
+accounts: accounts.join(","),
+time:    time,
+prep:    prep,
+cash:    cash,
+protect: protect,
+tax:     tax,
+aid:     aid
+});
 
-    localStorage.setItem("clientName",       clientName);
-    localStorage.setItem("edu_score",        score);
-    localStorage.setItem("edu_phase",        phase);
-    localStorage.setItem("edu_type",         type);
-    localStorage.setItem("edu_summary",      summary);
-    localStorage.setItem("edu_accounts",     JSON.stringify(accounts));
-    localStorage.setItem("edu_timeIndex",    time);
-    localStorage.setItem("edu_prepIndex",    prep);
-    localStorage.setItem("edu_cashIndex",    cash);
-    localStorage.setItem("edu_protectIndex", protect);
-    localStorage.setItem("edu_taxIndex",     tax);
-    localStorage.setItem("edu_aidIndex",     aid);
+// Also keep localStorage for backward compat with lead.html
+localStorage.setItem("clientName",       clientName);
+localStorage.setItem("edu_score",        score);
+localStorage.setItem("edu_phase",        phase);
+localStorage.setItem("edu_type",         type);
+localStorage.setItem("edu_summary",      summary);
+localStorage.setItem("edu_accounts",     JSON.stringify(accounts));
+localStorage.setItem("edu_timeIndex",    time);
+localStorage.setItem("edu_prepIndex",    prep);
+localStorage.setItem("edu_cashIndex",    cash);
+localStorage.setItem("edu_protectIndex", protect);
+localStorage.setItem("edu_taxIndex",     tax);
+localStorage.setItem("edu_aidIndex",     aid);
+localStorage.setItem("edu_params",       params.toString());
 
-    window.location.href = "lead.html";
+window.location.href = "lead.html";
 }
 </script>
 
