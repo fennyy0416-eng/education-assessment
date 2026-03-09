@@ -9,264 +9,94 @@ cat > /workspaces/education-assessment/report.html << 'EOF'
   <style>
     * { box-sizing: border-box; }
     :root {
-      --muted: #64748b;
-      --text: #0f172a;
-      --line: #e2e8f0;
-      --blue: #2563eb;
-      --panel: #f8fbff;
+      --muted: #64748b; --text: #0f172a; --line: #e2e8f0;
+      --blue: #2563eb; --panel: #f8fbff;
       --shadow: 0 16px 40px rgba(15,23,42,0.08);
     }
     body {
-      margin: 0;
-      padding: 32px 16px;
+      margin: 0; padding: 32px 16px;
       font-family: Arial, "PingFang SC", "Microsoft YaHei", sans-serif;
       background: radial-gradient(circle at top left, #f8fbff 0%, transparent 28%),
                   linear-gradient(180deg, #eef4fb 0%, #edf2f8 100%);
       color: var(--text);
     }
     .report {
-      max-width: 820px;
-      margin: 0 auto;
+      max-width: 820px; margin: 0 auto;
       background: rgba(255,255,255,0.98);
-      border-radius: 24px;
-      padding: 32px;
+      border-radius: 24px; padding: 32px;
       box-shadow: var(--shadow);
       border: 1px solid rgba(255,255,255,0.85);
     }
     .topbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 18px;
-      flex-wrap: wrap;
-      margin-bottom: 24px;
-      padding-bottom: 18px;
+      display: flex; justify-content: space-between;
+      align-items: flex-start; gap: 18px; flex-wrap: wrap;
+      margin-bottom: 24px; padding-bottom: 18px;
       border-bottom: 1px solid var(--line);
     }
     .brand {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 12px;
-      letter-spacing: 1.2px;
-      color: var(--blue);
-      font-weight: 800;
-      margin-bottom: 12px;
-      text-transform: uppercase;
-      background: #eff6ff;
-      border: 1px solid #dbeafe;
-      padding: 7px 12px;
-      border-radius: 999px;
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 12px; letter-spacing: 1.2px; color: var(--blue);
+      font-weight: 800; margin-bottom: 12px; text-transform: uppercase;
+      background: #eff6ff; border: 1px solid #dbeafe;
+      padding: 7px 12px; border-radius: 999px;
     }
-    h1 {
-      margin: 0 0 10px;
-      font-size: 30px;
-      color: var(--text);
-      line-height: 1.18;
-      letter-spacing: -0.3px;
-    }
-    .sub {
-      color: var(--muted);
-      line-height: 1.8;
-      max-width: 560px;
-      font-size: 14px;
-    }
+    h1 { margin: 0 0 10px; font-size: 30px; color: var(--text); line-height: 1.18; letter-spacing: -0.3px; }
+    .sub { color: var(--muted); line-height: 1.8; max-width: 560px; font-size: 14px; }
     .meta {
-      text-align: right;
-      min-width: 190px;
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.9;
-      background: #fafcff;
-      border: 1px solid var(--line);
-      padding: 14px 16px;
-      border-radius: 16px;
+      text-align: right; min-width: 190px; color: var(--muted);
+      font-size: 13px; line-height: 1.9;
+      background: #fafcff; border: 1px solid var(--line);
+      padding: 14px 16px; border-radius: 16px;
     }
-    .score-box {
-      display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
-      gap: 14px;
-      margin-bottom: 24px;
-    }
+    .score-box { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 14px; margin-bottom: 24px; }
     .score-main {
       background: linear-gradient(135deg, #e0ecff 0%, #f4f8ff 100%);
-      border: 1px solid #cfe0ff;
-      border-radius: 22px;
-      padding: 24px;
-      min-height: 165px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
+      border: 1px solid #cfe0ff; border-radius: 22px; padding: 24px;
+      min-height: 165px; display: flex; flex-direction: column; justify-content: center;
     }
     .score-kicker { font-size: 13px; color: var(--muted); margin-bottom: 10px; }
-    .score {
-      font-size: 60px;
-      font-weight: 800;
-      color: var(--blue);
-      line-height: 1;
-      margin-bottom: 10px;
-      letter-spacing: -2px;
-    }
+    .score { font-size: 60px; font-weight: 800; color: var(--blue); line-height: 1; margin-bottom: 10px; letter-spacing: -2px; }
     .score-label { font-size: 15px; color: #334155; }
     .score-side { display: grid; gap: 12px; }
-    .summary-card {
-      background: white;
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      padding: 16px;
-      box-shadow: 0 8px 20px rgba(15,23,42,0.03);
-    }
-    .summary-title {
-      font-size: 12px;
-      color: var(--muted);
-      margin-bottom: 8px;
-      text-transform: uppercase;
-      letter-spacing: 0.8px;
-    }
+    .summary-card { background: white; border: 1px solid var(--line); border-radius: 16px; padding: 16px; box-shadow: 0 8px 20px rgba(15,23,42,0.03); }
+    .summary-title { font-size: 12px; color: var(--muted); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.8px; }
     .summary-value { font-size: 20px; font-weight: 700; color: var(--text); line-height: 1.35; }
     .section { margin-top: 24px; }
-    .section h2 {
-      font-size: 19px;
-      margin: 0 0 12px;
-      color: var(--text);
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .section h2::before {
-      content: "";
-      width: 5px;
-      height: 20px;
-      border-radius: 999px;
-      background: linear-gradient(180deg, #3b82f6, #2563eb);
-      display: inline-block;
-    }
-    .card {
-      background: var(--panel);
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      padding: 18px;
-      line-height: 1.85;
-      color: #334155;
-    }
-    .metrics {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 12px;
-    }
-    .metric-box {
-      background: #fbfdff;
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      padding: 14px;
-    }
+    .section h2 { font-size: 19px; margin: 0 0 12px; color: var(--text); display: flex; align-items: center; gap: 10px; }
+    .section h2::before { content: ""; width: 5px; height: 20px; border-radius: 999px; background: linear-gradient(180deg, #3b82f6, #2563eb); display: inline-block; }
+    .card { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 18px; line-height: 1.85; color: #334155; }
+    .metrics { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+    .metric-box { background: #fbfdff; border: 1px solid var(--line); border-radius: 14px; padding: 14px; }
     .metric-name { font-size: 13px; color: var(--muted); margin-bottom: 10px; line-height: 1.5; }
     .metric-value { font-size: 26px; font-weight: 800; color: var(--text); line-height: 1; margin-bottom: 8px; }
     .metric-note { font-size: 12px; color: #94a3b8; line-height: 1.6; }
-    .analysis-grid {
-      display: grid;
-      grid-template-columns: 1.05fr 0.95fr;
-      gap: 16px;
-      align-items: stretch;
-    }
-    .chart-card {
-      background: linear-gradient(180deg, #fbfdff 0%, #f6faff 100%);
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      padding: 18px;
-    }
+    .analysis-grid { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 16px; align-items: stretch; }
+    .chart-card { background: linear-gradient(180deg, #fbfdff 0%, #f6faff 100%); border: 1px solid var(--line); border-radius: 16px; padding: 18px; }
     .chart-title { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 12px; }
     .chart-sub { color: var(--muted); font-size: 12px; margin-top: 10px; line-height: 1.7; text-align: center; }
     .radar-svg, .radar-png { width: 100%; max-width: 320px; display: block; margin: 0 auto; }
     .label-text { fill: #334155; font-size: 11px; text-anchor: middle; font-weight: 600; }
     .tick-text { fill: #94a3b8; font-size: 10px; text-anchor: middle; }
     .advice-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
-    .advice-item {
-      background: white;
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      padding: 16px 18px;
-      display: flex;
-      gap: 14px;
-      align-items: flex-start;
-    }
-    .advice-icon {
-      font-size: 22px;
-      line-height: 1;
-      flex-shrink: 0;
-      margin-top: 2px;
-    }
-    .advice-body {}
+    .advice-item { background: white; border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; display: flex; gap: 14px; align-items: flex-start; }
+    .advice-icon { font-size: 22px; line-height: 1; flex-shrink: 0; margin-top: 2px; }
     .advice-title { font-weight: 700; font-size: 15px; color: var(--text); margin-bottom: 4px; }
     .advice-desc { font-size: 13px; color: var(--muted); line-height: 1.75; }
-    .cta-block {
-      margin-top: 24px;
-      background: linear-gradient(135deg, #eff6ff 0%, #f0f9ff 100%);
-      border: 1px solid #bfdbfe;
-      border-radius: 18px;
-      padding: 24px;
-      text-align: center;
-    }
+    .cta-block { margin-top: 24px; background: linear-gradient(135deg, #eff6ff 0%, #f0f9ff 100%); border: 1px solid #bfdbfe; border-radius: 18px; padding: 24px; text-align: center; }
     .cta-block h3 { margin: 0 0 8px; font-size: 18px; color: var(--text); }
     .cta-block p { margin: 0 0 18px; color: var(--muted); font-size: 14px; line-height: 1.8; }
     .cta-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-    .actions {
-      margin-top: 20px;
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 14px 20px;
-      background: linear-gradient(90deg, #2563eb 0%, #3b82f6 100%);
-      color: white;
-      text-decoration: none;
-      border-radius: 12px;
-      font-weight: 700;
-      border: none;
-      cursor: pointer;
-      font-size: 14px;
-      box-shadow: 0 10px 24px rgba(37,99,235,0.18);
-    }
-    .btn.secondary {
-      background: #e2e8f0;
-      color: #0f172a;
-      box-shadow: none;
-    }
-    .btn.green {
-      background: linear-gradient(90deg, #16a34a 0%, #22c55e 100%);
-      box-shadow: 0 10px 24px rgba(22,163,74,0.18);
-    }
-    .footer {
-      margin-top: 28px;
-      font-size: 12px;
-      line-height: 1.9;
-      color: var(--muted);
-      border-top: 1px solid var(--line);
-      padding-top: 16px;
-    }
+    .actions { margin-top: 20px; display: flex; gap: 12px; flex-wrap: wrap; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; padding: 14px 20px; background: linear-gradient(90deg, #2563eb 0%, #3b82f6 100%); color: white; text-decoration: none; border-radius: 12px; font-weight: 700; border: none; cursor: pointer; font-size: 14px; box-shadow: 0 10px 24px rgba(37,99,235,0.18); }
+    .btn.secondary { background: #e2e8f0; color: #0f172a; box-shadow: none; }
+    .btn.green { background: linear-gradient(90deg, #16a34a 0%, #22c55e 100%); box-shadow: 0 10px 24px rgba(22,163,74,0.18); }
     .account-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
-    .account-tag {
-      background: #eff6ff;
-      border: 1px solid #bfdbfe;
-      color: #1d4ed8;
-      border-radius: 999px;
-      padding: 4px 12px;
-      font-size: 12px;
-      font-weight: 600;
-    }
-    .account-tag.warn {
-      background: #fff7ed;
-      border-color: #fed7aa;
-      color: #c2410c;
-    }
+    .account-tag { background: #eff6ff; border: 1px solid #bfdbfe; color: #1d4ed8; border-radius: 999px; padding: 4px 12px; font-size: 12px; font-weight: 600; }
+    .account-tag.warn { background: #fff7ed; border-color: #fed7aa; color: #c2410c; }
+    .footer { margin-top: 28px; font-size: 12px; line-height: 1.9; color: var(--muted); border-top: 1px solid var(--line); padding-top: 16px; }
     .section, .summary-card, .metric-box, .chart-card, .card { break-inside: avoid; page-break-inside: avoid; }
     @media (max-width: 860px) {
-      .report { padding: 22px; }
-      h1 { font-size: 26px; }
+      .report { padding: 22px; } h1 { font-size: 26px; }
       .score-box, .metrics, .analysis-grid { grid-template-columns: 1fr; }
       .meta { text-align: left; }
     }
@@ -274,20 +104,17 @@ cat > /workspaces/education-assessment/report.html << 'EOF'
 </head>
 <body>
 <div class="report" id="pdfContent">
-
   <div class="topbar">
     <div>
       <div class="brand">Education Structure Report</div>
       <h1>家庭教育资金结构分析报告</h1>
-      <div class="sub">
-        这份结果帮你快速看清楚：现在准备到哪一步了，哪些地方更需要早点安排。重点是让你知道下一步先做什么。
-      </div>
+      <div class="sub">这份结果帮你快速看清楚：现在准备到哪一步了，哪些地方更需要早点安排。重点是让你知道下一步先做什么。</div>
     </div>
     <div class="meta">
-      客户：<span id="clientName">客户</span><br>
+      客户：<span id="clientName">—</span><br>
       顾问：Fenny Yan<br>
-      报告编号：<span id="reportId"></span><br>
-      报告日期：<span id="reportDate"></span>
+      报告编号：<span id="reportId">—</span><br>
+      报告日期：<span id="reportDate">—</span>
     </div>
   </div>
 
@@ -326,36 +153,12 @@ cat > /workspaces/education-assessment/report.html << 'EOF'
   <div class="section">
     <h2>六个关键方面</h2>
     <div class="metrics">
-      <div class="metric-box">
-        <div class="metric-name">时间压力</div>
-        <div class="metric-value" id="timeIndex">0</div>
-        <div class="metric-note">越高表示时间越紧，越要早点安排</div>
-      </div>
-      <div class="metric-box">
-        <div class="metric-name">准备情况</div>
-        <div class="metric-value" id="prepIndex">0</div>
-        <div class="metric-note">越高表示目前准备还不够</div>
-      </div>
-      <div class="metric-box">
-        <div class="metric-name">账户多元化</div>
-        <div class="metric-value" id="cashIndex">0</div>
-        <div class="metric-note">越高表示账户类型还比较单一</div>
-      </div>
-      <div class="metric-box">
-        <div class="metric-name">保障情况</div>
-        <div class="metric-value" id="protectIndex">0</div>
-        <div class="metric-note">越高表示保障这块还可以再补一补</div>
-      </div>
-      <div class="metric-box">
-        <div class="metric-name">税务影响</div>
-        <div class="metric-value" id="taxIndex">0</div>
-        <div class="metric-note">越高表示后面更需要注意税务安排</div>
-      </div>
-      <div class="metric-box">
-        <div class="metric-name">FAFSA / 助学金影响</div>
-        <div class="metric-value" id="aidIndex">0</div>
-        <div class="metric-note">越高表示更要提前了解填报规则</div>
-      </div>
+      <div class="metric-box"><div class="metric-name">时间压力</div><div class="metric-value" id="timeIndex">—</div><div class="metric-note">越高表示时间越紧，越要早点安排</div></div>
+      <div class="metric-box"><div class="metric-name">准备情况</div><div class="metric-value" id="prepIndex">—</div><div class="metric-note">越高表示目前准备还不够</div></div>
+      <div class="metric-box"><div class="metric-name">账户多元化</div><div class="metric-value" id="cashIndex">—</div><div class="metric-note">越高表示账户类型还比较单一</div></div>
+      <div class="metric-box"><div class="metric-name">保障情况</div><div class="metric-value" id="protectIndex">—</div><div class="metric-note">越高表示保障这块还可以再补一补</div></div>
+      <div class="metric-box"><div class="metric-name">税务影响</div><div class="metric-value" id="taxIndex">—</div><div class="metric-note">越高表示后面更需要注意税务安排</div></div>
+      <div class="metric-box"><div class="metric-name">FAFSA / 助学金影响</div><div class="metric-value" id="aidIndex">—</div><div class="metric-note">越高表示更要提前了解填报规则</div></div>
     </div>
   </div>
 
@@ -378,8 +181,7 @@ cat > /workspaces/education-assessment/report.html << 'EOF'
 
   <div class="cta-block" id="ctaBlock">
     <h3>想聊聊你家的具体情况？</h3>
-    <p>每个家庭的账户结构不一样，以上建议是根据你的填写生成的方向参考。<br>
-    如果想做一次更完整的梳理，欢迎直接联系我。</p>
+    <p>每个家庭的账户结构不一样，以上建议是根据你的填写生成的方向参考。<br>如果想做一次更完整的梳理，欢迎直接联系我。</p>
     <div class="cta-buttons">
       <button class="btn green" onclick="window.location.href='./contact.html'">📩 联系 Fenny 做进一步梳理</button>
     </div>
@@ -394,262 +196,189 @@ cat > /workspaces/education-assessment/report.html << 'EOF'
     这份报告主要用于帮助家庭更直观地了解当前情况，不构成税务、法律、投资或保险建议。后续如有需要，可以进一步细化成更完整的家庭规划方案。<br>
     顾问：Fenny Yan｜本报告仅供参考
   </div>
-
 </div>
 
 <script>
-  function pointOnRadar(cx, cy, radius, angleDeg, value) {
-    const r = radius * (value / 10);
-    const rad = (Math.PI / 180) * angleDeg;
-    return { x: cx + r * Math.cos(rad), y: cy + r * Math.sin(rad) };
+  /* ── radar ── */
+  function pointOnRadar(cx,cy,radius,angleDeg,value){
+    const r=radius*(value/10), rad=(Math.PI/180)*angleDeg;
+    return {x:cx+r*Math.cos(rad), y:cy+r*Math.sin(rad)};
+  }
+  function drawRadarSvg(values){
+    const svg=document.getElementById("radarSvg"); if(!svg)return;
+    const cx=180,cy=180,radius=110;
+    const angles=[-90,-30,30,90,150,210];
+    const labels=["时间压力","准备情况","账户多元化","保障情况","税务影响","助学金"];
+    let html="";
+    for(let level=2;level<=10;level+=2){
+      const pts=angles.map(a=>{const p=pointOnRadar(cx,cy,radius,a,level);return `${p.x.toFixed(1)},${p.y.toFixed(1)}`;});
+      html+=`<polygon points="${pts.join(" ")}" fill="none" stroke="rgba(148,163,184,0.30)" stroke-width="1"></polygon>`;
+    }
+    for(let j=0;j<angles.length;j++){
+      const outer=pointOnRadar(cx,cy,radius,angles[j],10);
+      html+=`<line x1="${cx}" y1="${cy}" x2="${outer.x}" y2="${outer.y}" stroke="rgba(148,163,184,0.28)" stroke-width="1"></line>`;
+    }
+    for(let t=2;t<=10;t+=2) html+=`<text x="${cx}" y="${cy-(radius*t/10)+4}" class="tick-text">${t}</text>`;
+    const valuePts=angles.map((a,k)=>{const p=pointOnRadar(cx,cy,radius,a,values[k]);return `${p.x.toFixed(1)},${p.y.toFixed(1)}`;});
+    html+=`<polygon points="${valuePts.join(" ")}" fill="rgba(59,130,246,0.18)" stroke="rgba(37,99,235,1)" stroke-width="2"></polygon>`;
+    for(let m=0;m<angles.length;m++){
+      const dot=pointOnRadar(cx,cy,radius,angles[m],values[m]);
+      html+=`<circle cx="${dot.x}" cy="${dot.y}" r="4" fill="rgba(37,99,235,1)" stroke="#fff" stroke-width="1.5"></circle>`;
+    }
+    const labelRadius=138;
+    for(let n=0;n<angles.length;n++){
+      const lr=pointOnRadar(cx,cy,labelRadius,angles[n],10);
+      html+=`<text x="${lr.x}" y="${lr.y+4}" class="label-text">${labels[n]}</text>`;
+    }
+    svg.innerHTML=html;
   }
 
-  function drawRadarSvg(values) {
-    const svg = document.getElementById("radarSvg");
-    if (!svg) return;
-    const cx = 180, cy = 180, radius = 110;
-    const angles = [-90, -30, 30, 90, 150, 210];
-    const labels = ["时间压力","准备情况","账户多元化","保障情况","税务影响","助学金"];
-    let html = "";
-    for (let level = 2; level <= 10; level += 2) {
-      const pts = angles.map(a => { const p = pointOnRadar(cx,cy,radius,a,level); return `${p.x.toFixed(1)},${p.y.toFixed(1)}`; });
-      html += `<polygon points="${pts.join(" ")}" fill="none" stroke="rgba(148,163,184,0.30)" stroke-width="1"></polygon>`;
-    }
-    for (let j = 0; j < angles.length; j++) {
-      const outer = pointOnRadar(cx,cy,radius,angles[j],10);
-      html += `<line x1="${cx}" y1="${cy}" x2="${outer.x}" y2="${outer.y}" stroke="rgba(148,163,184,0.28)" stroke-width="1"></line>`;
-    }
-    for (let t = 2; t <= 10; t += 2) {
-      html += `<text x="${cx}" y="${cy - (radius*t/10) + 4}" class="tick-text">${t}</text>`;
-    }
-    const valuePts = angles.map((a,k) => { const p = pointOnRadar(cx,cy,radius,a,values[k]); return `${p.x.toFixed(1)},${p.y.toFixed(1)}`; });
-    html += `<polygon points="${valuePts.join(" ")}" fill="rgba(59,130,246,0.18)" stroke="rgba(37,99,235,1)" stroke-width="2"></polygon>`;
-    for (let m = 0; m < angles.length; m++) {
-      const dot = pointOnRadar(cx,cy,radius,angles[m],values[m]);
-      html += `<circle cx="${dot.x}" cy="${dot.y}" r="4" fill="rgba(37,99,235,1)" stroke="#fff" stroke-width="1.5"></circle>`;
-    }
-    const labelRadius = 138;
-    for (let n = 0; n < angles.length; n++) {
-      const lr = pointOnRadar(cx,cy,labelRadius,angles[n],10);
-      html += `<text x="${lr.x}" y="${lr.y + 4}" class="label-text">${labels[n]}</text>`;
-    }
-    svg.innerHTML = html;
+  /* ── load data: URL params first, localStorage as fallback ── */
+  const urlParams = new URLSearchParams(window.location.search);
+
+  function getParam(urlKey, lsKey, fallback){
+    return urlParams.get(urlKey) || localStorage.getItem(lsKey) || fallback;
   }
 
-  const clientName  = localStorage.getItem("clientName")   || "客户";
-  const score       = localStorage.getItem("edu_score")    || "—";
-  const phase       = localStorage.getItem("edu_phase")    || "规划建立期";
-  const familyType  = localStorage.getItem("edu_type")     || "规划准备型家庭";
-  const summary     = localStorage.getItem("edu_summary")  || "从测评结果看，建议尽快对家里的账户结构做一次梳理。";
-  const accounts    = JSON.parse(localStorage.getItem("edu_accounts") || "[]");
+  const clientName  = getParam("name",    "clientName",    "客户");
+  const score       = getParam("score",   "edu_score",     "—");
+  const phase       = getParam("phase",   "edu_phase",     "规划建立期");
+  const familyType  = getParam("type",    "edu_type",      "规划准备型家庭");
+  const summary     = getParam("summary", "edu_summary",   "从测评结果看，建议尽快对家里的账户结构做一次梳理。");
 
-  const timeIndex    = parseFloat(localStorage.getItem("edu_timeIndex")    || "5");
-  const prepIndex    = parseFloat(localStorage.getItem("edu_prepIndex")    || "5");
-  const cashIndex    = parseFloat(localStorage.getItem("edu_cashIndex")    || "5");
-  const protectIndex = parseFloat(localStorage.getItem("edu_protectIndex") || "5");
-  const taxIndex     = parseFloat(localStorage.getItem("edu_taxIndex")     || "5");
-  const aidIndex     = parseFloat(localStorage.getItem("edu_aidIndex")     || "5");
+  const accountsRaw = urlParams.get("accounts") || "";
+  const accounts    = accountsRaw ? accountsRaw.split(",").filter(Boolean)
+                    : JSON.parse(localStorage.getItem("edu_accounts") || "[]");
 
+  const timeIndex    = parseFloat(getParam("time",    "edu_timeIndex",    "5"));
+  const prepIndex    = parseFloat(getParam("prep",    "edu_prepIndex",    "5"));
+  const cashIndex    = parseFloat(getParam("cash",    "edu_cashIndex",    "5"));
+  const protectIndex = parseFloat(getParam("protect", "edu_protectIndex", "5"));
+  const taxIndex     = parseFloat(getParam("tax",     "edu_taxIndex",     "5"));
+  const aidIndex     = parseFloat(getParam("aid",     "edu_aidIndex",     "5"));
+
+  /* ── date / id ── */
   const today  = new Date();
   const yyyy   = today.getFullYear();
   const mm     = String(today.getMonth()+1).padStart(2,"0");
   const dd     = String(today.getDate()).padStart(2,"0");
-  const reportId = "EDU-" + yyyy + "-" + String(Math.floor(Math.random()*10000)).padStart(4,"0");
+  const reportId = "EDU-"+yyyy+"-"+String(Math.floor(Math.random()*10000)).padStart(4,"0");
 
-  document.getElementById("clientName").innerText = clientName;
-  document.getElementById("reportId").innerText   = reportId;
-  document.getElementById("reportDate").innerText = `${yyyy}-${mm}-${dd}`;
-  document.getElementById("score").innerText      = score;
-  document.getElementById("phase").innerText      = phase;
-  document.getElementById("familyType").innerText = familyType;
-  document.getElementById("summary").innerText    = summary;
+  /* ── fill fields ── */
+  document.getElementById("clientName").innerText  = clientName;
+  document.getElementById("reportId").innerText    = reportId;
+  document.getElementById("reportDate").innerText  = `${yyyy}-${mm}-${dd}`;
+  document.getElementById("score").innerText       = score;
+  document.getElementById("phase").innerText       = phase;
+  document.getElementById("familyType").innerText  = familyType;
+  document.getElementById("summary").innerText     = summary;
+  document.getElementById("timeIndex").innerText   = timeIndex.toFixed(1);
+  document.getElementById("prepIndex").innerText   = prepIndex.toFixed(1);
+  document.getElementById("cashIndex").innerText   = cashIndex.toFixed(1);
+  document.getElementById("protectIndex").innerText= protectIndex.toFixed(1);
+  document.getElementById("taxIndex").innerText    = taxIndex.toFixed(1);
+  document.getElementById("aidIndex").innerText    = aidIndex.toFixed(1);
 
-  document.getElementById("timeIndex").innerText    = timeIndex.toFixed(1);
-  document.getElementById("prepIndex").innerText    = prepIndex.toFixed(1);
-  document.getElementById("cashIndex").innerText    = cashIndex.toFixed(1);
-  document.getElementById("protectIndex").innerText = protectIndex.toFixed(1);
-  document.getElementById("taxIndex").innerText     = taxIndex.toFixed(1);
-  document.getElementById("aidIndex").innerText     = aidIndex.toFixed(1);
-
-  const accountLabels = {
-    brokerage:  { label: "普通券商账户", warn: true  },
-    retirement: { label: "退休账户 (401k/IRA)", warn: false },
-    insurance:  { label: "人寿保险 (Whole Life/IUL)", warn: false },
-    child:      { label: "孩子名下账户 (UGMA/UTMA/529)", warn: true },
-    foreign:    { label: "海外资产", warn: true },
-    none:       { label: "暂无专门账户", warn: true }
+  /* ── account tags ── */
+  const accountLabels={
+    brokerage: {label:"普通券商账户",warn:true},
+    retirement:{label:"退休账户 (401k/IRA)",warn:false},
+    insurance: {label:"人寿保险 (Whole Life/IUL)",warn:false},
+    child:     {label:"孩子名下账户 (UGMA/UTMA/529)",warn:true},
+    foreign:   {label:"海外资产",warn:true},
+    none:      {label:"暂无专门账户",warn:true}
   };
-
-  const tagContainer = document.getElementById("accountTags");
-  const noteEl       = document.getElementById("accountNote");
-
-  if (accounts.length === 0 || (accounts.length === 1 && accounts[0] === "none")) {
-    tagContainer.innerHTML = `<span class="account-tag warn">暂无专门账户</span>`;
-    noteEl.innerText = "目前还没有专门的教育资金账户，越早开始规划，后面选择空间越大。";
+  const tagContainer=document.getElementById("accountTags");
+  const noteEl=document.getElementById("accountNote");
+  if(accounts.length===0||(accounts.length===1&&accounts[0]==="none")){
+    tagContainer.innerHTML=`<span class="account-tag warn">暂无专门账户</span>`;
+    noteEl.innerText="目前还没有专门的教育资金账户，越早开始规划，后面选择空间越大。";
   } else {
-    accounts.forEach(a => {
-      if (!accountLabels[a]) return;
-      const { label, warn } = accountLabels[a];
-      tagContainer.innerHTML += `<span class="account-tag${warn ? " warn" : ""}">${label}</span>`;
+    accounts.forEach(a=>{
+      if(!accountLabels[a])return;
+      const {label,warn}=accountLabels[a];
+      tagContainer.innerHTML+=`<span class="account-tag${warn?" warn":""}">${label}</span>`;
     });
-
-    let notes = [];
-    if (accounts.includes("brokerage")) notes.push("券商账户里的资产在 FAFSA 中通常需要如实申报，会直接影响助学金计算。");
-    if (accounts.includes("child"))     notes.push("孩子名下账户（UGMA/UTMA）在 FAFSA 中的权重比家长账户高（约20% vs 5.64%），需要特别注意。");
-    if (accounts.includes("foreign"))   notes.push("海外资产在 CSS Profile 中通常需要如实填写，建议提前整理估值信息。");
-    if (accounts.includes("insurance")) notes.push("人寿保险的现金价值在 FAFSA 规则下一般不需要计入资产，是资产结构中值得关注的部分。");
-    if (accounts.includes("retirement"))notes.push("退休账户（401k/IRA）在 FAFSA 中一般不需要计入资产，但 CSS Profile 的要求可能更严格。");
-    noteEl.innerText = notes.join(" ");
+    let notes=[];
+    if(accounts.includes("brokerage")) notes.push("券商账户里的资产在 FAFSA 中通常需要如实申报，会直接影响助学金计算。");
+    if(accounts.includes("child"))     notes.push("孩子名下账户（UGMA/UTMA）在 FAFSA 中的权重比家长账户高（约20% vs 5.64%），需要特别注意。");
+    if(accounts.includes("foreign"))   notes.push("海外资产在 CSS Profile 中通常需要如实填写，建议提前整理估值信息。");
+    if(accounts.includes("insurance")) notes.push("人寿保险的现金价值在 FAFSA 规则下一般不需要计入资产，是资产结构中值得关注的部分。");
+    if(accounts.includes("retirement"))notes.push("退休账户（401k/IRA）在 FAFSA 中一般不需要计入资产，但 CSS Profile 的要求可能更严格。");
+    noteEl.innerText=notes.join(" ");
   }
 
-  document.getElementById("observation").innerText =
-    `从这次结果看，你家目前属于「${phase}」阶段，家庭类型更接近「${familyType}」。` +
-    `雷达图中分数越高的维度，说明这部分越需要优先关注。` +
-    (aidIndex >= 6 ? `其中「FAFSA/助学金影响」这项分数偏高，建议重点了解不同账户在填表时的处理方式。` : "") +
-    (protectIndex >= 5 ? `「保障情况」这项也值得关注，家庭保障和教育资金规划可以一起来考虑。` : "");
+  /* ── observation ── */
+  document.getElementById("observation").innerText=
+    `从这次结果看，你家目前属于「${phase}」阶段，家庭类型更接近「${familyType}」。`+
+    `雷达图中分数越高的维度，说明这部分越需要优先关注。`+
+    (aidIndex>=6?`其中「FAFSA/助学金影响」这项分数偏高，建议重点了解不同账户在填表时的处理方式。`:"")+
+    (protectIndex>=5?`「保障情况」这项也值得关注，家庭保障和教育资金规划可以一起来考虑。`:"");
 
-  const adviceItems = [];
+  /* ── advice ── */
+  const adviceItems=[];
+  if(timeIndex>=8) adviceItems.push({icon:"⏰",title:"时间窗口已经很紧，优先做账户结构梳理",desc:"孩子快到申请阶段了，很多账户结构的调整需要提前完成才有效。建议尽快把家里的账户归类对一遍，确认哪些会被计入 FAFSA / CSS 资产。"});
+  else if(timeIndex>=5) adviceItems.push({icon:"📅",title:"现在是调整账户结构的好时间窗口",desc:"还有几年时间，是规划账户结构最从容的阶段。提前两三年做好的安排，到填表时就已经是既成事实，不需要临时应对。"});
+  if(aidIndex>=6) adviceItems.push({icon:"🎓",title:"了解不同账户在 FAFSA / CSS 里的处理方式",desc:"不同账户在填表时的归类方式差别很大：普通券商账户通常要申报，退休账户和人寿保险现金价值在 FAFSA 下一般不计入资产。提前了解这些规则，能避免不必要的损失。"});
+  if(accounts.includes("brokerage")&&!accounts.includes("insurance")&&!accounts.includes("retirement")) adviceItems.push({icon:"📊",title:"券商账户资产集中，可以考虑做结构分散",desc:"目前资产主要在券商账户里，填 FAFSA 时这部分需要如实申报。可以考虑逐步了解退休账户或人寿保险账户的配置方式，把资产放在对填表影响更小的位置。"});
+  if(accounts.includes("child")) adviceItems.push({icon:"👶",title:"孩子名下账户需要特别关注",desc:"UGMA/UTMA 账户在 FAFSA 中按孩子资产计算，权重约为 20%，比家长账户的 5.64% 高很多。同样的金额，放在孩子名下对助学金的影响可能差好几千美元，建议提前了解对策。"});
+  if(accounts.includes("foreign")) adviceItems.push({icon:"🌏",title:"海外资产需要提前整理，CSS 填写时会用到",desc:"CSS Profile 会要求填写海外房产、银行账户等信息，通常需要提供当前市值。建议提前把境外资产的估值信息整理好，避免填表时手忙脚乱。"});
+  if(accounts.includes("insurance")) adviceItems.push({icon:"✅",title:"已有人寿保险账户，记得了解其在 FAFSA 中的处理方式",desc:"Whole Life / IUL 里积累的现金价值在 FAFSA 规则下一般不需要计入资产，这是一个很多家庭没有意识到的优势。建议确认一下自己保单的具体情况，和整体资产结构一起规划。"});
+  if(protectIndex>=5) adviceItems.push({icon:"🛡️",title:"家庭保障和教育资金可以一起考虑",desc:"人寿保险不只是保障工具，部分险种（如 Whole Life）的现金价值在 FAFSA 中有特殊的处理方式，同时还能兼顾家庭保障功能，是很多双重需求家庭会考虑的选项。"});
+  if(taxIndex>=6) adviceItems.push({icon:"💰",title:"税务安排值得提前了解",desc:"不同账户的税务处理方式不一样：Roth IRA 的增长免税，普通券商账户的收益需要申报。自营业主家庭的情况通常更复杂，建议结合自身情况做一次系统梳理。"});
+  if(adviceItems.length===0) adviceItems.push({icon:"📋",title:"先把现有账户的 FAFSA 归类对一遍",desc:"建议把家里所有账户列出来，逐一了解在 FAFSA / CSS 里的处理方式。这一步不需要做什么改变，先搞清楚现状，再决定是否需要调整。"});
+  adviceItems.push({icon:"💬",title:"每个家庭情况不一样，可以做一次一对一梳理",desc:"以上建议是根据你的测评结果生成的方向参考。如果想把自己家的具体情况过一遍，欢迎直接私信 Fenny，一起把账户结构理清楚。"});
 
-  if (timeIndex >= 8) {
-    adviceItems.push({
-      icon: "⏰",
-      title: "时间窗口已经很紧，优先做账户结构梳理",
-      desc: "孩子快到申请阶段了，很多账户结构的调整需要提前完成才有效。建议尽快把家里的账户归类对一遍，确认哪些会被计入 FAFSA / CSS 资产。"
-    });
-  } else if (timeIndex >= 5) {
-    adviceItems.push({
-      icon: "📅",
-      title: "现在是调整账户结构的好时间窗口",
-      desc: "还有几年时间，是规划账户结构最从容的阶段。提前两三年做好的安排，到填表时就已经是既成事实，不需要临时应对。"
-    });
-  }
-
-  if (aidIndex >= 6) {
-    adviceItems.push({
-      icon: "🎓",
-      title: "了解不同账户在 FAFSA / CSS 里的处理方式",
-      desc: "不同账户在填表时的归类方式差别很大：普通券商账户通常要申报，退休账户和人寿保险现金价值在 FAFSA 下一般不计入资产。提前了解这些规则，能避免不必要的损失。"
-    });
-  }
-
-  if (accounts.includes("brokerage") && !accounts.includes("insurance") && !accounts.includes("retirement")) {
-    adviceItems.push({
-      icon: "📊",
-      title: "券商账户资产集中，可以考虑做结构分散",
-      desc: "目前资产主要在券商账户里，填 FAFSA 时这部分需要如实申报。可以考虑逐步了解退休账户或人寿保险账户的配置方式，把资产放在对填表影响更小的位置。"
-    });
-  }
-
-  if (accounts.includes("child")) {
-    adviceItems.push({
-      icon: "👶",
-      title: "孩子名下账户需要特别关注",
-      desc: "UGMA/UTMA 账户在 FAFSA 中按孩子资产计算，权重约为 20%，比家长账户的 5.64% 高很多。同样的金额，放在孩子名下对助学金的影响可能差好几千美元，建议提前了解对策。"
-    });
-  }
-
-  if (accounts.includes("foreign")) {
-    adviceItems.push({
-      icon: "🌏",
-      title: "海外资产需要提前整理，CSS 填写时会用到",
-      desc: "CSS Profile 会要求填写海外房产、银行账户等信息，通常需要提供当前市值。建议提前把境外资产的估值信息整理好，避免填表时手忙脚乱。"
-    });
-  }
-
-  if (accounts.includes("insurance")) {
-    adviceItems.push({
-      icon: "✅",
-      title: "已有人寿保险账户，记得了解其在 FAFSA 中的处理方式",
-      desc: "Whole Life / IUL 里积累的现金价值在 FAFSA 规则下一般不需要计入资产，这是一个很多家庭没有意识到的优势。建议确认一下自己保单的具体情况，和整体资产结构一起规划。"
-    });
-  }
-
-  if (protectIndex >= 5) {
-    adviceItems.push({
-      icon: "🛡️",
-      title: "家庭保障和教育资金可以一起考虑",
-      desc: "人寿保险不只是保障工具，部分险种（如 Whole Life）的现金价值在 FAFSA 中有特殊的处理方式，同时还能兼顾家庭保障功能，是很多双重需求家庭会考虑的选项。"
-    });
-  }
-
-  if (taxIndex >= 6) {
-    adviceItems.push({
-      icon: "💰",
-      title: "税务安排值得提前了解",
-      desc: "不同账户的税务处理方式不一样：Roth IRA 的增长免税，普通券商账户的收益需要申报。自营业主家庭的情况通常更复杂，建议结合自身情况做一次系统梳理。"
-    });
-  }
-
-  if (adviceItems.length === 0) {
-    adviceItems.push({
-      icon: "📋",
-      title: "先把现有账户的 FAFSA 归类对一遍",
-      desc: "建议把家里所有账户列出来，逐一了解在 FAFSA / CSS 里的处理方式。这一步不需要做什么改变，先搞清楚现状，再决定是否需要调整。"
-    });
-  }
-
-  adviceItems.push({
-    icon: "💬",
-    title: "每个家庭情况不一样，可以做一次一对一梳理",
-    desc: "以上建议是根据你的测评结果生成的方向参考。如果想把自己家的具体情况过一遍，欢迎直接私信 Fenny，一起把账户结构理清楚。"
-  });
-
-  const adviceList = document.getElementById("adviceList");
-  adviceList.innerHTML = adviceItems.map(item => `
+  document.getElementById("adviceList").innerHTML=adviceItems.map(item=>`
     <li class="advice-item">
       <div class="advice-icon">${item.icon}</div>
       <div class="advice-body">
         <div class="advice-title">${item.title}</div>
         <div class="advice-desc">${item.desc}</div>
       </div>
-    </li>
-  `).join("");
+    </li>`).join("");
 
-  drawRadarSvg([timeIndex, prepIndex, cashIndex, protectIndex, taxIndex, aidIndex]);
+  /* ── radar ── */
+  drawRadarSvg([timeIndex,prepIndex,cashIndex,protectIndex,taxIndex,aidIndex]);
 
-  function downloadPDF() {
-    const element   = document.getElementById("pdfContent");
-    const actionBar = document.getElementById("actionBar");
-    const ctaBlock  = document.getElementById("ctaBlock");
-    const radarSvg  = document.getElementById("radarSvg");
-
-    const svgData = new XMLSerializer().serializeToString(radarSvg);
-    const svgBlob = new Blob([svgData], { type: "image/svg+xml;charset=utf-8" });
-    const url     = URL.createObjectURL(svgBlob);
-    const img     = new Image();
-
-    img.onload = function () {
-      const canvas = document.createElement("canvas");
-      canvas.width = 360; canvas.height = 360;
-      canvas.getContext("2d").drawImage(img, 0, 0);
-      const pngData = canvas.toDataURL("image/png");
-      const imgTag  = document.createElement("img");
-      imgTag.src = pngData;
-      imgTag.className = "radar-png";
-
-      radarSvg.parentNode.replaceChild(imgTag, radarSvg);
-      actionBar.style.display = "none";
-      ctaBlock.style.display  = "none";
-
-      const opt = {
-        margin: [0.35, 0.3, 0.35, 0.3],
-        filename: `education_report_${clientName}.pdf`,
-        image: { type: "jpeg", quality: 1 },
-        html2canvas: { scale: 2.5, useCORS: true, scrollY: 0, logging: false },
-        jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
-        pagebreak: { mode: ["avoid-all", "css", "legacy"] }
+  /* ── PDF ── */
+  function downloadPDF(){
+    const element=document.getElementById("pdfContent");
+    const actionBar=document.getElementById("actionBar");
+    const ctaBlock=document.getElementById("ctaBlock");
+    const radarSvg=document.getElementById("radarSvg");
+    const svgData=new XMLSerializer().serializeToString(radarSvg);
+    const svgBlob=new Blob([svgData],{type:"image/svg+xml;charset=utf-8"});
+    const url=URL.createObjectURL(svgBlob);
+    const img=new Image();
+    img.onload=function(){
+      const canvas=document.createElement("canvas");
+      canvas.width=360;canvas.height=360;
+      canvas.getContext("2d").drawImage(img,0,0);
+      const pngData=canvas.toDataURL("image/png");
+      const imgTag=document.createElement("img");
+      imgTag.src=pngData;imgTag.className="radar-png";
+      radarSvg.parentNode.replaceChild(imgTag,radarSvg);
+      actionBar.style.display="none";
+      ctaBlock.style.display="none";
+      const opt={
+        margin:[0.35,0.3,0.35,0.3],
+        filename:`education_report_${clientName}.pdf`,
+        image:{type:"jpeg",quality:1},
+        html2canvas:{scale:2.5,useCORS:true,scrollY:0,logging:false},
+        jsPDF:{unit:"in",format:"letter",orientation:"portrait"},
+        pagebreak:{mode:["avoid-all","css","legacy"]}
       };
-
-      setTimeout(() => {
-        html2pdf().set(opt).from(element).save().then(() => {
-          imgTag.parentNode.replaceChild(radarSvg, imgTag);
-          actionBar.style.display = "flex";
-          ctaBlock.style.display  = "block";
+      setTimeout(()=>{
+        html2pdf().set(opt).from(element).save().then(()=>{
+          imgTag.parentNode.replaceChild(radarSvg,imgTag);
+          actionBar.style.display="flex";
+          ctaBlock.style.display="block";
           URL.revokeObjectURL(url);
         });
-      }, 300);
+      },300);
     };
-    img.src = url;
+    img.src=url;
   }
 </script>
 
