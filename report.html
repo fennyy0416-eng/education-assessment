@@ -196,6 +196,7 @@ cat > /workspaces/education-assessment/report.html << 'EOF'
       flex-shrink: 0;
       margin-top: 2px;
     }
+    .advice-body {}
     .advice-title { font-weight: 700; font-size: 15px; color: var(--text); margin-bottom: 4px; }
     .advice-desc { font-size: 13px; color: var(--muted); line-height: 1.75; }
     .cta-block {
@@ -380,7 +381,7 @@ cat > /workspaces/education-assessment/report.html << 'EOF'
     <p>每个家庭的账户结构不一样，以上建议是根据你的填写生成的方向参考。<br>
     如果想做一次更完整的梳理，欢迎直接联系我。</p>
     <div class="cta-buttons">
-      <button class="btn green" onclick="alert('请通过小红书私信或留言联系 Fenny Yan')">📩 联系 Fenny 做进一步梳理</button>
+      <button class="btn green" onclick="window.location.href='./contact.html'">📩 联系 Fenny 做进一步梳理</button>
     </div>
   </div>
 
