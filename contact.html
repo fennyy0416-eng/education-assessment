@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>联系 Fenny</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: Arial, "PingFang SC", "Microsoft YaHei", sans-serif;
+            background: linear-gradient(180deg, #eef4fb 0%, #edf2f8 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 32px 16px;
+        }
+        .card {
+            width: 100%;
+            max-width: 420px;
+            background: white;
+            border-radius: 24px;
+            padding: 36px 32px;
+            box-shadow: 0 16px 40px rgba(15,23,42,0.10);
+            border: 1px solid rgba(255,255,255,0.9);
+            text-align: center;
+        }
+        .tag {
+            display: inline-block;
+            font-size: 12px;
+            color: #16a34a;
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            padding: 6px 12px;
+            border-radius: 999px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            margin-bottom: 20px;
+        }
+        h1 {
+            margin: 0 0 10px;
+            font-size: 26px;
+            color: #0f172a;
+        }
+        .subtitle {
+            color: #64748b;
+            font-size: 14px;
+            line-height: 1.8;
+            margin-bottom: 28px;
+        }
+        .qr-wrap {
+            background: #f8fbff;
+            border: 1px solid #e2e8f0;
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 24px;
+            display: inline-block;
+            width: 100%;
+        }
+        .qr-wrap img {
+            width: 100%;
+            max-width: 260px;
+            border-radius: 12px;
+            display: block;
+            margin: 0 auto;
+        }
+        .qr-hint {
+            margin-top: 14px;
+            font-size: 13px;
+            color: #94a3b8;
+            line-height: 1.7;
+        }
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+            color: #cbd5e1;
+            font-size: 12px;
+        }
+        .divider::before, .divider::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: #e2e8f0;
+        }
+        .info-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #f8fbff;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 14px 16px;
+            margin-bottom: 12px;
+            text-align: left;
+        }
+        .info-icon { font-size: 20px; flex-shrink: 0; }
+        .info-text { font-size: 14px; color: #334155; line-height: 1.6; }
+        .info-text strong { color: #0f172a; }
+        .back-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 24px;
+            background: #e2e8f0;
+            color: #0f172a;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 700;
+            text-decoration: none;
+            cursor: pointer;
+            border: none;
+        }
+        .back-btn:hover { background: #cbd5e1; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="tag">📩 微信联系</div>
+        <h1>你好，我是 Fenny</h1>
+        <div class="subtitle">
+            扫描下方二维码添加我的微信，<br>
+            我们可以聊聊你家的具体情况。
+        </div>
+
+        <div class="qr-wrap">
+            <img src="./wechat_qr.jpeg" alt="芳媛 Fenny 微信二维码" />
+            <div class="qr-hint">📱 微信扫码添加 · Scan QR code to add me</div>
+        </div>
+
+        <div class="divider">添加后可以告诉我</div>
+
+        <div class="info-row">
+            <div class="info-icon">🎓</div>
+            <div class="info-text">孩子大概什么时候升学，<strong>我帮你对一下时间节点</strong></div>
+        </div>
+        <div class="info-row">
+            <div class="info-icon">📊</div>
+            <div class="info-text">家里有哪些账户，<strong>一起梳理 FAFSA 填报结构</strong></div>
+        </div>
+        <div class="info-row">
+            <div class="info-icon">💬</div>
+            <div class="info-text">有任何关于助学金规划的问题，<strong>欢迎直接问我</strong></div>
+        </div>
+
+        <a class="back-btn" href="./">← 返回报告</a>
+    </div>
+</body>
+</html>
